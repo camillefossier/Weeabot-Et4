@@ -1,3 +1,8 @@
+import argparse
+import re
+import random
+import mode1 as m1
+
 def parseVocab(vocab_file):
     fileV = open(vocab_file, 'r')
     theme = []
@@ -21,8 +26,52 @@ def parseVocab(vocab_file):
 def run():
     vocab_file = "../vocab/vocab.txt"
     theme = parseVocab(vocab_file)
-    print(theme)
-    return 0
+    inp = input('You: ')
+    print(questionFinder(inp, theme))
+
+
+def questionFinder(sentence, vocab):
+    
+    sent = tokenise_en(sentence)
+    for word in sent:
+        for theme in vocab:
+            
+            for words in theme[0]:
+                
+                if word == words : 
+                    question = pickQuestion(theme[1])
+                    return pickQuestion(theme[1])
+    return "Hummm"
+
+def pickQuestion(theme):
+    question = random.choice(theme)
+    theme.remove(question)
+    return question
+
+
+def tokenise_en(sent):
+
+    # deal with apostrophes
+    sent = re.sub("([^ ])\'", r"\1 '", sent) # separate apostrophe from preceding word by a space if no space to left
+    sent = re.sub(" \'", r" ' ", sent) # separate apostrophe from following word if a space if left
+
+    # separate on punctuation by first adding a space before punctuation that should not be stuck to
+    # the previous word and then splitting on whitespace everywhere
+    cannot_precede = ["M", "Prof", "Sgt", "Lt", "Ltd", "co", "etc", "[A-Z]", "[Ii].e", "[eE].g"] #non-exhaustive list
+                                        
+    # creates a regex of the form (?:(?<!M)(?<!Prof)(?<!Sgt)...), i.e. whatever follows cannot be
+    # preceded by one of these words (all punctuation that is not preceded by these words is to be
+    # replaced by a space plus itself
+    regex_cannot_precede = "(?:(?<!"+")(?<!".join(cannot_precede)+"))" 
+    
+    sent = re.sub(regex_cannot_precede+"([\.\,\;\:\)\(\"\?\!]( |$))", r" \1", sent)
+
+    # then restick several consecutive fullstops ... or several ?? or !! by removing the space
+    # inbetween them
+    sent = re.sub("((^| )[\.\?\!]) ([\.\?\!]( |$))", r"\1\2", sent) 
+
+    sent = sent.split() # split on whitespace
+    return sent
 
 # chatbot psychologue Eliza
 

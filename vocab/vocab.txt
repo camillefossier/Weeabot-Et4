@@ -1,18 +1,18 @@
 ###
-famille
-pere
-mere
-frere
-soeur
+family
+father
+sister
+brother
+mother
 #
-Parlez moi de votre famille
+Tell me more about your family :)
 Pensez-vous avoir reçu l'education parfaite ?
 ###
-pomme
-burger
-chips
-glace
-mcdo
+apple
+peer
+banana
+macdonalds
+KFC
 #
 C'est quoi ton plat preferé ?
 Pensez-vous que le nutella est mauvais pour la santé ?
