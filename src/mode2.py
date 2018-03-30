@@ -2,8 +2,14 @@ import argparse
 import re
 import random
 import mode1 as m1
+import copy
+
+vocab = []
+constVocab = []
 
 def parseVocab(vocab_file):
+    global vocab
+    global constVocab
     fileV = open(vocab_file, 'r')
     theme = []
     th = -1
@@ -21,26 +27,44 @@ def parseVocab(vocab_file):
                 break
             else:
                 theme[th][i].append(line[:-1])
-    return theme
+    vocab = theme
+    constVocab = copy.copy(theme)
 
 def run():
     vocab_file = "../vocab/vocab.txt"
-    theme = parseVocab(vocab_file)
-    inp = input('You: ')
-    print(questionFinder(inp, theme))
+    parseVocab(vocab_file)
+    last = 'NIL'
+    over = False
+    while(not over):
+        print(vocab)
+        inp = input('You: ')
+        last = answer(inp)
+        print('Bot: '+last)
+        if inp == 'exit':
+            over = True
 
+def answer(sentence):
+    # ici il faudra decider si on pose une question par rapport à un certain theme
+    # ou si on detecte un "je suis X" etc.
+ 
+    return questionFinder(sentence)
 
-def questionFinder(sentence, vocab):
-    
+def questionFinder(sentence):
+    global vocab
+    global constVocab
     sent = tokenise_en(sentence)
     for word in sent:
+        i=-1
         for theme in vocab:
-            
+            i+=1
             for words in theme[0]:
                 
                 if word == words : 
+                    if len(theme[1])==0:
+                        print(constVocab[i][1])
+                        theme[1] = constVocab[i][1]
                     question = pickQuestion(theme[1])
-                    return pickQuestion(theme[1])
+                    return question
     return "Hummm"
 
 def pickQuestion(theme):
