@@ -1,0 +1,18 @@
+###
+famille
+pere
+mere
+frere
+soeur
+#
+Parlez moi de votre famille
+Pensez-vous avoir reçu l'education parfaite ?
+###
+pomme
+burger
+chips
+glace
+mcdo
+#
+C'est quoi ton plat preferé ?
+Pensez-vous que le nutella est mauvais pour la santé ?
