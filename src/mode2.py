@@ -27,11 +27,8 @@ def parseIrregular(irregular_file):
 def parseRegular(regular_file):
     global regular
     file = open(regular_file, 'r')
-    fileW = open('regular.txt', 'w')
     for v in file:
-        if v != ''
-            irregular.append(v.split(','))
-            fileW.print(v)
+        regular.append(v)
         
 def parseVocab(vocab_file):
     global vocab
@@ -133,7 +130,7 @@ def findVerb(sent):
     w=0
     while w < len(sent):
         if (sent[w]=='I'):
-            return (findTense(sent,w+1)+findCOD(sent, w+2)+' ?')
+            return (str(findTense(sent,w+1))+findCOD(sent, w+2)+' ?')
         w+=1
     return False
 
@@ -142,21 +139,33 @@ def findTense(sent, w):
     tense = False
     for v in irregular:
         if tense == False:
-            tense = getFormula(v, word)
+            if word==v[0]:
+                return 'Why do you '+v[0]
+            elif word==v[1]:
+                return 'Why did you '+v[0]
+            elif word[len(word)-1]=='d' and word[len(word)-2]=='e' and (word[:-1]==v or word[:-2]==v):
+                return 'Why did you '+v
+            elif word=='will':
+                return 'Why will you'
         else:
             break
     if tense == False:
         for v in regular:
-            tense = getFormula(v, word)
-    return tense
+            if word==v:
+                return 'Why do you '+v
+            elif word[len(word)-1]=='d' and word[len(word)-2]=='e' and (word[:-1]==v or word[:-2]==v):
+                return 'Why did you '+v
+            elif word=='will':
+                return 'Why will you'
+    return False
 
 def getFormula(v,word):
     if word==v[0]:
         return 'Why do you '+v[0]
     elif word==v[1]:
         return 'Why did you '+v[0]
-    elif word[len(word)-1] == 'd' and word[len(word)-2] == 'e':
-        return 'Why did you '+word[:-1]
+    elif word[len(word)-1]=='d' and word[len(word)-2]=='e' and (word[:-1]==v or word[:-2]==v):
+        return 'Why did you '+v
     elif word=='will':
         return 'Why will you'
     else:
