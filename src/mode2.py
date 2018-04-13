@@ -3,6 +3,7 @@ import re
 import random
 import mode1 as m1
 import copy
+import functions as f
 
 vocab = []
 constVocab = []
@@ -73,11 +74,13 @@ def run():
         inp = input('You: ')
         if inp == 'exit':
             over = True
-            print('Bot: Bye !')
+            print('Bot: ', end='')
+            f.type('Bye !')
         else:
             readDejaVu(inp, lastInp)
             last = answer(inp, last)
-            print('Bot: '+last)
+            print('Bot: ', end='')
+            f.type(last)
         lastInp = copy.deepcopy(inp)
 
 def readDejaVu(inp, last):
@@ -85,7 +88,8 @@ def readDejaVu(inp, last):
     if inp == last:
         if dejaVuCursor < len(dejaVu)-1:
             dejaVuCursor+=1
-            print("Bot: "+dejaVu[dejaVuCursor])
+            print("Bot: ",end='')
+            f.type(dejaVu[dejaVuCursor])
 
     else:
         if dejaVuCursor >= 0:
