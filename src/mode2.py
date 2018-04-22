@@ -14,7 +14,8 @@ toBe = [[['I', 'am'], ['Why are you']],
 
 translations = [['my', 'your'],
                 ['me', 'you'],
-                ['I', 'you']]
+                ['I', 'you'],
+                ['was', 'were']]
 
 irregular = []
 regular = []
@@ -104,9 +105,9 @@ def answer(sentence, last):
     useMode1 = False
     ans = questionFinder(sent)
     if ans == False:
-        ans = findBe(sent)
-    if ans == False:
         ans = findVerb(sent)
+    if ans == False:
+        ans = findBe(sent)
     
     
     if ans==False:
@@ -162,10 +163,14 @@ def findVerb(sent):
     while w < len(sent):
         if (sent[w]=='I'):
             cod=findCOD(sent, w+2)
-            if len(cod)>0:
-                return ('Why '+str(findTense(sent,w+1))+cod+' ?')
+            tens = findTense(sent,w+1)
+            if tens != False:
+                if len(cod)>0:
+                    return ('Why '+str(tens)+cod+' ?')
+                else:
+                    return ('What '+str(tens)+' ?')
             else:
-                return ('What '+str(findTense(sent,w+1))+' ?')
+                return False
         w+=1
     return False
 
