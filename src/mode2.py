@@ -3,6 +3,7 @@ import re
 import random
 import mode1 as m1
 import copy
+import functions as f
 
 vocab = []
 constVocab = []
@@ -12,11 +13,17 @@ toBe = [[['I', 'am'], ['Why are you']],
         [['I', 'have'], ['Why have you']]]
 
 translations = [['my', 'your'],
+                ['me', 'you'],
                 ['I', 'you'],
-                ['me', 'you']]
+                ['was', 'were']]
 
 irregular = []
 regular = []
+
+dejaVu = ['I have a feeling of déjà vu', "Haven't you already said that ?", "Stop saying the same thing over and over !", 'You parrot !', 'Morgan would hate the way you keep repeating yourself !', "You know what, I'll pretend this is normal..."]
+dejaVuCursor = -1
+
+#TODO: Faire une fonction universelle de parsing qui prend en parametre le tableau de sortie ? possible avec des variables globales ? peut etre
 
 def parseIrregular(irregular_file):
     global irregular
@@ -28,7 +35,8 @@ def parseRegular(regular_file):
     global regular
     file = open(regular_file, 'r')
     for v in file:
-        regular.append(v)
+        regular.append(v[:-1])
+    #print(regular)
         
 def parseVocab(vocab_file):
     global vocab
@@ -61,27 +69,51 @@ def run():
     parseRegular("../vocab/regular.txt")
     last = 'NIL'
     over = False
+    last = ""
+    lastInp = ""
     while(not over):
         inp = input('You: ')
-        last = answer(inp, last)
-        print('Bot: '+last)
         if inp == 'exit':
             over = True
+            print('Bot: ', end='')
+            f.type('Bye !')
+        else:
+            readDejaVu(inp, lastInp)
+            last = answer(inp, last)
+            print('Bot: ', end='')
+            f.type(last)
+        lastInp = copy.deepcopy(inp)
+
+def readDejaVu(inp, last):
+    global dejaVuCursor
+    if inp == last:
+        if dejaVuCursor < len(dejaVu)-1:
+            dejaVuCursor+=1
+            print("Bot: ",end='')
+            f.type(dejaVu[dejaVuCursor])
+
+    else:
+        if dejaVuCursor >= 0:
+            dejaVuCursor -= 1
+        
 
 def answer(sentence, last):
-    # ici il faudra decider si on pose une question par rapport à un certain theme
-    # ou si on detecte un "je suis X" etc.
+    # TODO : Peut etre faire un truc comme quoi si il detecte deux trucs genre "Je suis X" et le mot "father"
+    # il decide de manière aléatoire s'il va parler de l'un ou l'autre
+    # RANDOM IS KEY TO A GREAT DISCUSSION !
     sent = tokenise_en(sentence)
-
-    ans = findBe(sent)
+    useMode1 = False
+    ans = questionFinder(sent)
     if ans == False:
         ans = findVerb(sent)
     if ans == False:
-        ans = questionFinder(sent)
+        ans = findBe(sent)
+    
     
     if ans==False:
-        ans = m1.getRandomWord(ans)
-    if ans == last:
+        useMode1 = True
+        ans = m1.getRandomWord(last)
+    if ans == last and useMode1 == True:
         ans = answer(sentence, last)
     return ans
 
@@ -130,46 +162,48 @@ def findVerb(sent):
     w=0
     while w < len(sent):
         if (sent[w]=='I'):
-            return (str(findTense(sent,w+1))+findCOD(sent, w+2)+' ?')
+            cod=findCOD(sent, w+2)
+            tens = findTense(sent,w+1)
+            if tens != False:
+                if len(cod)>0:
+                    return ('Why '+str(tens)+cod+' ?')
+                else:
+                    return ('What '+str(tens)+' ?')
+            else:
+                return False
         w+=1
     return False
 
+# TODO: Cette fonction accepte que le mec dise n'importe quoi genre 'I would needed'
+# Il faudrait qu'on lui dise : ca veut rien dire
 def findTense(sent, w):
     word = sent[w]
     tense = False
     for v in irregular:
         if tense == False:
             if word==v[0]:
-                return 'Why do you '+v[0]
+                return 'do you '+v[0]
             elif word==v[1]:
-                return 'Why did you '+v[0]
-            elif word[len(word)-1]=='d' and word[len(word)-2]=='e' and (word[:-1]==v or word[:-2]==v):
-                return 'Why did you '+v
+                return 'did you '+v[0]
             elif word=='will':
-                return 'Why will you'
+                return 'will you'
+            elif word=='would':
+                return 'would you'
         else:
             break
     if tense == False:
+        #print("not irregular")
         for v in regular:
+            #print(v)
             if word==v:
-                return 'Why do you '+v
+                return 'do you '+v
             elif word[len(word)-1]=='d' and word[len(word)-2]=='e' and (word[:-1]==v or word[:-2]==v):
-                return 'Why did you '+v
+                return 'did you '+v
             elif word=='will':
-                return 'Why will you'
+                return 'will you'
+            elif word=='would':
+                return 'would you'
     return False
-
-def getFormula(v,word):
-    if word==v[0]:
-        return 'Why do you '+v[0]
-    elif word==v[1]:
-        return 'Why did you '+v[0]
-    elif word[len(word)-1]=='d' and word[len(word)-2]=='e' and (word[:-1]==v or word[:-2]==v):
-        return 'Why did you '+v
-    elif word=='will':
-        return 'Why will you'
-    else:
-        return False
 
 def translate(word):
     for w in translations:

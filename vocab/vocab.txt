@@ -5,8 +5,8 @@ sister
 brother
 mother
 #
-Tell me more about your family :)
-Pensez-vous avoir reçu l'education parfaite ?
+Tell me more about your family
+Do you think you received the perfect education ?
 ###
 apple
 peer
@@ -14,5 +14,5 @@ banana
 macdonalds
 KFC
 #
-C'est quoi ton plat preferé ?
-Pensez-vous que le nutella est mauvais pour la santé ?
+What is your favourite meal ?
+Would you consider Nutella is bad for you ?
