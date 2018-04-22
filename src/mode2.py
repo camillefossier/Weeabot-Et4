@@ -104,9 +104,10 @@ def answer(sentence, last):
     useMode1 = False
     ans = questionFinder(sent)
     if ans == False:
-        ans = findVerb(sent)
-    if ans == False:
         ans = findBe(sent)
+    if ans == False:
+        ans = findVerb(sent)
+    
     
     if ans==False:
         useMode1 = True
@@ -160,7 +161,11 @@ def findVerb(sent):
     w=0
     while w < len(sent):
         if (sent[w]=='I'):
-            return (str(findTense(sent,w+1))+findCOD(sent, w+2)+' ?')
+            cod=findCOD(sent, w+2)
+            if len(cod)>0:
+                return ('Why '+str(findTense(sent,w+1))+cod+' ?')
+            else:
+                return ('What '+str(findTense(sent,w+1))+' ?')
         w+=1
     return False
 
@@ -172,15 +177,13 @@ def findTense(sent, w):
     for v in irregular:
         if tense == False:
             if word==v[0]:
-                return 'Why do you '+v[0]
+                return 'do you '+v[0]
             elif word==v[1]:
-                return 'Why did you '+v[0]
-            elif word[len(word)-1]=='d' and word[len(word)-2]=='e' and (word[:-1]==v or word[:-2]==v):
-                return 'Why did you '+v
+                return 'did you '+v[0]
             elif word=='will':
-                return 'Why will you'
+                return 'will you'
             elif word=='would':
-                return 'Why would you'
+                return 'would you'
         else:
             break
     if tense == False:
@@ -188,26 +191,14 @@ def findTense(sent, w):
         for v in regular:
             #print(v)
             if word==v:
-                return 'Why do you '+v
+                return 'do you '+v
             elif word[len(word)-1]=='d' and word[len(word)-2]=='e' and (word[:-1]==v or word[:-2]==v):
-                return 'Why did you '+v
+                return 'did you '+v
             elif word=='will':
-                return 'Why will you'
+                return 'will you'
             elif word=='would':
-                return 'Why would you'
+                return 'would you'
     return False
-
-def getFormula(v,word):
-    if word==v[0]:
-        return 'Why do you '+v[0]
-    elif word==v[1]:
-        return 'Why did you '+v[0]
-    elif word[len(word)-1]=='d' and word[len(word)-2]=='e' and (word[:-1]==v or word[:-2]==v):
-        return 'Why did you '+v
-    elif word=='will':
-        return 'Why will you'
-    else:
-        return False
 
 def translate(word):
     for w in translations:
