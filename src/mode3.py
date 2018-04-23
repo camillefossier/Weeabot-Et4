@@ -8,7 +8,7 @@ import random
 
 curr1 = None
 curr2 = None
-last_theme=-1
+last_theme=9
 
 
 # TODO: Faire comme pour le mode 2
@@ -21,7 +21,7 @@ vocabSubject = [
         ['rated', 'score', 'mark', 'good', 'bad'],
         ['number', 'chapters', 'long', 'short', 'finished', 'over'],
         ['When', 'old', 'recent', 'published', 'date'],
-        ['who', 'wrote', 'written', 'created'],
+        ['wrote', 'written', 'created'],
         ['characters', 'character']
         ]
 
@@ -60,8 +60,6 @@ class Manga(dict):
 
 
 def get_subject(nb, manga):
-        if nb == -1:
-                return "Yeah what about it ?"
         if nb == 0:
                 return manga.title
         elif nb == 1:
@@ -78,8 +76,12 @@ def get_subject(nb, manga):
                 return manga.datePublication
         elif nb == 7:
                 return manga.authors
+        elif nb == 8:
+                return manga.characters
+        elif nb == 9:
+                return "Yeah what about it ?"
         else:
-                return get_subject(random.randint(0,7), manga)
+                return get_subject(random.randint(0,8), manga)
         
 
 def create_manga_list(nombre):
@@ -189,7 +191,7 @@ def run():
                         f.type('What manga are you talking about ?')
                 else:
                         print("Bot: ",end='')
-                        f.type(str(get_subject(th, curr1)))
+                        print(str(get_subject(th, curr1)))
 
 
 

@@ -12,9 +12,10 @@ def contains_arr(a, b):
                 sc+=1
     return sc/len(b)
 
-def max_index(arr, r=-1):
-    sc = arr[r]
-    ind = r
+def max_index(arr, r=0):
+
+    sc = arr[0]
+    ind = 0
     if len(arr) > 1:
         for i in range(1, len(arr)):
             if arr[i] > sc:
@@ -31,10 +32,10 @@ def type(stri):
     time.sleep(0.7)
     for v in stri:
         if v == " ":
-            time.sleep(random.randint(200,500)/1000)
+            time.sleep(random.randint(100,300)/1000)
         print(v, end='')        
         sys.stdout.flush()
-        time.sleep(random.randint(30,100)/1000)
+        time.sleep(random.randint(10,50)/1000)
     sys.stdout.write("\n")
     return 1
 
