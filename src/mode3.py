@@ -62,9 +62,17 @@ def create_anime_list(nombre):
 			continue
 	return list_anime
 
+def order_by_rank(listemanga):
+	sorted_list = []
+	sorted_list = sorted(listemanga, key = lambda x: (x.rank))
+	return sorted_list
+
 def run():
 	file = open('mangalistfinal', 'r+b')
 	
+
+	#Uncomment the following part to create the mangalist file containing the number of mangas you chose with the create_manga_list function. 
+
 	'''manga_list = []
 	list_manga = create_manga_list(500)
 	for manga in list_manga:
@@ -88,11 +96,19 @@ def run():
 	print("ajout manga---")'''
 	listemangafini = []
 	listemangafini = pickle.load(file)
+	sorted_manga = order_by_rank(listemangafini)
 	nbmanga = 0
-	for manga in listemangafini:
+	for manga in sorted_manga:
 		nbmanga = nbmanga + 1
 		#manga.informations()
+		#print("~~~~~~~~~~")
+		#print("")
 	print(nbmanga)
+	i = 0
+	for i in range (0, 100):
+		print(sorted_manga[i].title, sorted_manga[i].rank)
+
+
 
 
 
