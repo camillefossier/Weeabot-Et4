@@ -5,14 +5,22 @@ import myanimelist.session as mals
 import functions as f
 import random
 
+
+curr1 = None
+curr2 = None
+last_theme=-1
+
+
+# TODO: Faire comme pour le mode 2
+# Un fichier qui contient les mots à détecter et des formulations pour répondre
 vocabSubject = [
         ['title', 'name', 'called'],
         ['rank', 'ranked'],
         ['genre', 'type'],
-        ['favourites'],
-        ['score', 'mark'],
+        ['favorites'],
+        ['rated', 'score', 'mark', 'good', 'bad'],
         ['number', 'chapters', 'long', 'short', 'finished', 'over'],
-        ['when', 'old', 'recent', 'published', 'date'],
+        ['When', 'old', 'recent', 'published', 'date'],
         ['who', 'wrote', 'written', 'created'],
         ['characters', 'character']
         ]
@@ -52,6 +60,8 @@ class Manga(dict):
 
 
 def get_subject(nb, manga):
+        if nb == -1:
+                return "Yeah what about it ?"
         if nb == 0:
                 return manga.title
         elif nb == 1:
@@ -59,7 +69,7 @@ def get_subject(nb, manga):
         elif nb == 2:
                 return manga.genres
         elif nb == 3:
-                return manga.nb_favourites
+                return manga.nb_favorites
         elif nb == 4:
                 return manga.score
         elif nb == 5:
@@ -103,6 +113,7 @@ def order_by_rank(listemanga):
 
 #TODO:
 def determine_theme(sent):
+        global last_theme
         scores = []
         for i in range(len(vocabSubject)):
                 sc = 0
@@ -111,8 +122,22 @@ def determine_theme(sent):
                                 if s==w:
                                         sc+=1
                 scores.append(sc)
-        return f.max_index(scores)
+        i = f.max_index(scores, last_theme)
+        last_theme = i
+        return i
                         
+def update_manga(sent, mlist):
+        global curr1
+        global curr2
+        count = 0
+        for m in mlist:
+                titl=f.tokenise_en(m.title)
+                if m.title != curr1 and f.contains_arr(sent, titl) >= 0.6:
+                        curr2 = curr1
+                        curr1 = m
+                        break
+                        # EUH attention aux histoires de copies là c ptet du pointeur
+
 
 
 def run():
@@ -153,11 +178,18 @@ def run():
 		#print("")
 	print(nbmanga)
 	i = 0
-	for i in range (0, 100):
-		print(sorted_manga[i].title, sorted_manga[i].rank)
+	#for i in range (0, 100):
+		#print(sorted_manga[i].title, sorted_manga[i].rank)
 	while(True):
-                th = determine_theme(f.tokenise_en(input("You : ")))
-                print(get_subject(th, sorted_manga[0]))
+                sent = f.tokenise_en(input("You: "))
+                th = determine_theme(sent)
+                update_manga(sent, sorted_manga)
+                if curr1 == None:
+                        print("Bot: ",end='')
+                        f.type('What manga are you talking about ?')
+                else:
+                        print("Bot: ",end='')
+                        f.type(str(get_subject(th, curr1)))
 
 
 

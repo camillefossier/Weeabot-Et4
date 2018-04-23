@@ -3,15 +3,27 @@ import re
 import time
 import random
 
-def max_index(arr):
-    sc = arr[0]
-    ind = 0
+#returns a number between 0 and 1 to tell how much of b a contains
+def contains_arr(a, b):
+    sc = 0
+    for i in a:
+        for j in b:
+            if i==j:
+                sc+=1
+    return sc/len(b)
+
+def max_index(arr, r=-1):
+    sc = arr[r]
+    ind = r
     if len(arr) > 1:
         for i in range(1, len(arr)):
             if arr[i] > sc:
                 sc = arr[i]
                 ind = i
-    return ind
+    if sc>0:
+        return ind
+    else:
+        return r
 
 def type(stri):
     v=0
