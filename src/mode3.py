@@ -2,6 +2,20 @@ import requests
 import pickle
 import myanimelist.manga
 import myanimelist.session as mals
+import functions as f
+import random
+
+vocabSubject = [
+        ['title', 'name', 'called'],
+        ['rank', 'ranked'],
+        ['genre', 'type'],
+        ['favourites'],
+        ['score', 'mark'],
+        ['number', 'chapters', 'long', 'short', 'finished', 'over'],
+        ['when', 'old', 'recent', 'published', 'date'],
+        ['who', 'wrote', 'written', 'created'],
+        ['characters', 'character']
+        ]
 
 class Manga(dict):
 
@@ -37,6 +51,26 @@ class Manga(dict):
 		
 
 
+def get_subject(nb, manga):
+        if nb == 0:
+                return manga.title
+        elif nb == 1:
+                return manga.rank
+        elif nb == 2:
+                return manga.genres
+        elif nb == 3:
+                return manga.nb_favourites
+        elif nb == 4:
+                return manga.score
+        elif nb == 5:
+                return manga.nb_chapters
+        elif nb == 6:
+                return manga.datePublication
+        elif nb == 7:
+                return manga.authors
+        else:
+                return get_subject(random.randint(0,7), manga)
+        
 
 def create_manga_list(nombre):
 	session = mals.Session()
@@ -66,6 +100,20 @@ def order_by_rank(listemanga):
 	sorted_list = []
 	sorted_list = sorted(listemanga, key = lambda x: (x.rank))
 	return sorted_list
+
+#TODO:
+def determine_theme(sent):
+        scores = []
+        for i in range(len(vocabSubject)):
+                sc = 0
+                for s in vocabSubject[i]:
+                        for w in sent:                                
+                                if s==w:
+                                        sc+=1
+                scores.append(sc)
+        return f.max_index(scores)
+                        
+
 
 def run():
 	file = open('mangalistfinal', 'r+b')
@@ -107,6 +155,9 @@ def run():
 	i = 0
 	for i in range (0, 100):
 		print(sorted_manga[i].title, sorted_manga[i].rank)
+	while(True):
+                th = determine_theme(f.tokenise_en(input("You : ")))
+                print(get_subject(th, sorted_manga[0]))
 
 
 

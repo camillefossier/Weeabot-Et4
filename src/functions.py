@@ -3,6 +3,16 @@ import re
 import time
 import random
 
+def max_index(arr):
+    sc = arr[0]
+    ind = 0
+    if len(arr) > 1:
+        for i in range(1, len(arr)):
+            if arr[i] > sc:
+                sc = arr[i]
+                ind = i
+    return ind
+
 def type(stri):
     v=0
     sys.stdout.flush()
