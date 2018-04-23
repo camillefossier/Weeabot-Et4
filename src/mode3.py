@@ -5,6 +5,7 @@ import myanimelist.session as mals
 import functions as f
 import random
 
+sorted_manga = []
 
 curr1 = None
 curr2 = None
@@ -24,6 +25,23 @@ vocabSubject = [
         ['wrote', 'written', 'created'],
         ['characters', 'character']
         ]
+
+actionToDo = [
+        ['what', 'how'], # info about the current one
+        ['compare', 'between', 'and', 'the', 'two'], # compare curr1 and curr2 on a criteria
+        ['the', 'best', 'highest', 'biggest', 'all', 'first'], # give the best on one criteria
+        ['the', 'worst', 'all', 'last'], # and the worst
+        ['which', 'manga'] # find a manga with a particularity
+        ]
+
+def act(nb, ac):
+        if ac==0:
+                return give_info(nb)
+        elif ac==1:
+                return compare(nb)
+        elif ac==2:
+                return highest(nb, sorted_manga)
+  
 
 class Manga(dict):
 
@@ -60,7 +78,9 @@ class Manga(dict):
 
 
 def get_subject(nb, manga):
-        if nb == 0:
+        if nb == -1:
+                return "Yeah what about it ?"
+        elif nb == 0:
                 return manga.title
         elif nb == 1:
                 return manga.rank
@@ -78,11 +98,46 @@ def get_subject(nb, manga):
                 return manga.authors
         elif nb == 8:
                 return manga.characters
-        elif nb == 9:
-                return "Yeah what about it ?"
         else:
                 return get_subject(random.randint(0,8), manga)
-        
+
+def give_info(nb):
+        if curr1 == None:
+                print("Bot: ",end='')
+                return 'What manga are you talking about ?'
+        else:
+                return get_subject(nb, curr1)
+
+def compare(nb):
+        if curr1 == None:
+                return 'You did not give me any manga name...'
+        elif curr2 == None:
+                return 'You forgot to mention another manga...'
+        else:
+                return str(get_subject(nb, curr1))+" et "+str(get_subject(nb, curr2))
+
+def highest(nb, mlist):
+        if nb==0 or nb==2 or nb==6 or nb==7 or nb==8:
+                return "You did not give me a good criteria..."
+        else:
+                if nb == 1:
+                        coef=-1
+                else:
+                        coef=1
+                sc = coef*get_subject(nb, mlist[0])
+                manga = mlist[0]
+        for m in mlist:
+                try:
+                        tmp = coef*get_subject(nb, m)
+                        if tmp > sc:
+                                sc = tmp
+                                manga = m
+                except:
+                        1
+        return str(manga.title)+" : "+str(get_subject(nb, manga))
+                        
+                
+
 
 def create_manga_list(nombre):
 	session = mals.Session()
@@ -113,13 +168,12 @@ def order_by_rank(listemanga):
 	sorted_list = sorted(listemanga, key = lambda x: (x.rank))
 	return sorted_list
 
-#TODO:
-def determine_theme(sent):
+def determine_most(sent, arr):
         global last_theme
         scores = []
-        for i in range(len(vocabSubject)):
+        for i in range(len(arr)):
                 sc = 0
-                for s in vocabSubject[i]:
+                for s in arr[i]:
                         for w in sent:                                
                                 if s==w:
                                         sc+=1
@@ -169,6 +223,7 @@ def run():
 
 	pickle.dump(manga_list, file)
 	print("ajout manga---")'''
+	global sorted_manga
 	listemangafini = []
 	listemangafini = pickle.load(file)
 	sorted_manga = order_by_rank(listemangafini)
@@ -184,15 +239,12 @@ def run():
 		#print(sorted_manga[i].title, sorted_manga[i].rank)
 	while(True):
                 sent = f.tokenise_en(input("You: "))
-                th = determine_theme(sent)
+                th = determine_most(sent, vocabSubject)
                 update_manga(sent, sorted_manga)
-                if curr1 == None:
-                        print("Bot: ",end='')
-                        f.type('What manga are you talking about ?')
-                else:
-                        print("Bot: ",end='')
-                        print(str(get_subject(th, curr1)))
-
+                action = determine_most(sent, actionToDo)
+                print("Bot: ",end='')
+                #f.type(str(get_subject(th, curr1)))
+                f.type(str(act(th, action)))
 
 
 

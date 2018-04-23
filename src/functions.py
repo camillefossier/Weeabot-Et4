@@ -13,7 +13,6 @@ def contains_arr(a, b):
     return sc/len(b)
 
 def max_index(arr, r=0):
-
     sc = arr[0]
     ind = 0
     if len(arr) > 1:
