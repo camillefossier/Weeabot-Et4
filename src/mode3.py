@@ -1,7 +1,7 @@
 import requests
 import pickle
-import myanimelist.manga
-import myanimelist.session as mals
+#import myanimelist.manga
+#import myanimelist.session as mals
 import functions as f
 import random
 
@@ -22,13 +22,13 @@ vocabSubject = [
         ['rated', 'score', 'mark', 'good', 'bad'],
         ['number', 'chapters', 'long', 'short', 'finished', 'over'],
         ['When', 'old', 'recent', 'published', 'date'],
-        ['wrote', 'written', 'created'],
+        ['author', 'wrote', 'written', 'created'],
         ['characters', 'character']
         ]
 
 actionToDo = [
-        ['what', 'how'], # info about the current one
-        ['compare', 'between', 'and', 'the', 'two'], # compare curr1 and curr2 on a criteria
+        [], # info about the current one
+        ['are', 'compare', 'between', 'and', 'two'], # compare curr1 and curr2 on a criteria
         ['the', 'best', 'highest', 'biggest', 'all', 'first'], # give the best on one criteria
         ['the', 'worst', 'all', 'last'], # and the worst
         ['which', 'manga'] # find a manga with a particularity
@@ -37,7 +37,7 @@ actionToDo = [
 def act(nb, ac):
         if ac==0:
                 return give_info(nb)
-        elif ac==1:
+        if ac==1:
                 return compare(nb)
         elif ac==2:
                 return highest(nb, sorted_manga)
@@ -114,7 +114,7 @@ def compare(nb):
         elif curr2 == None:
                 return 'You forgot to mention another manga...'
         else:
-                return str(get_subject(nb, curr1))+" et "+str(get_subject(nb, curr2))
+                return str(get_subject(nb, curr1))+" and "+str(get_subject(nb, curr2))
 
 def highest(nb, mlist):
         if nb==0 or nb==2 or nb==6 or nb==7 or nb==8:
@@ -181,7 +181,19 @@ def determine_most(sent, arr):
         i = f.max_index(scores, last_theme)
         last_theme = i
         return i
-                        
+
+def determine_act(sent, arr):
+        scores = []
+        for i in range(len(arr)):
+                sc = 0
+                for s in arr[i]:
+                        for w in sent:                                
+                                if s==w:
+                                        sc+=1
+                scores.append(sc)
+        i = f.max_index(scores, 0)
+        return i
+        
 def update_manga(sent, mlist):
         global curr1
         global curr2
@@ -241,7 +253,7 @@ def run():
                 sent = f.tokenise_en(input("You: "))
                 th = determine_most(sent, vocabSubject)
                 update_manga(sent, sorted_manga)
-                action = determine_most(sent, actionToDo)
+                action = determine_act(sent, actionToDo)
                 print("Bot: ",end='')
                 #f.type(str(get_subject(th, curr1)))
                 f.type(str(act(th, action)))
