@@ -7,6 +7,7 @@ import random
 
 sorted_manga = []
 list_genre = []
+list_manga_matched = []
 
 curr1 = None
 curr2 = None
@@ -35,7 +36,7 @@ actionToDo = [
         ['which', 'manga', 'can', 'suggest', 'and'] # find a manga with a particularity
         ]
 
-def act(nb, ac, crit=None):
+def act(nb, ac, crit=None, second=0):
         if ac==0:
                 return give_info(nb)
         elif ac==1:
@@ -43,7 +44,7 @@ def act(nb, ac, crit=None):
         elif ac==2:
                 return highest(nb, sorted_manga)
         elif ac==4:
-        		return find_manga(crit, sorted_manga)
+        		return find_manga(crit, sorted_manga, second)
   
 
 class Manga(dict):
@@ -219,14 +220,20 @@ def determine_genre(sent):
 				genres.append(genre)
 	return genres
 
-def find_manga(crit, sorted_manga):
+def find_manga(crit, sorted_manga, second):
+	global list_manga_matched
 	if crit is not None:
 		nb_crit = len(crit)
 		if nb_crit==0:
 			return "There is no manga with this genres"
 		for manga in sorted_manga:
+			print("here")
 			if set(crit).issubset(manga.genres):
-				return "It's a perfect match with " + manga.title
+				if second==0:
+					return "It's a perfect match with " + manga.title
+				if second==1:
+					second -= 1
+					continue	
 			for genre in manga.genres:
 				if genre in crit:
 					return "It's match partly with " + manga.title
@@ -279,6 +286,7 @@ def run():
 		#i = 0
 	#for i in range (0, 100):
 		#print(sorted_manga[i].title, sorted_manga[i].rank)
+	new = 0
 	while(True):
 		sent = f.tokenise_en(input("You: "))
 		th = determine_most(sent, vocabSubject)
@@ -288,7 +296,13 @@ def run():
 		if action==4:
 			g = []
 			g = determine_genre(sent)
-			f.type(str(act(th, action, g)))
+			second = 0
+			for w in sent:
+				if "another"==w:
+					second += 1
+				else:
+					second += 0
+			f.type(str(act(th, action, g, second)))
 		else:
         #f.type(str(get_subject(th, curr1)))
 			f.type(str(act(th, action)))
