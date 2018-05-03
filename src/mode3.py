@@ -6,6 +6,7 @@ import functions as f
 import random
 
 sorted_manga = []
+list_genre = []
 
 curr1 = None
 curr2 = None
@@ -31,16 +32,18 @@ actionToDo = [
         ['are', 'compare', 'between', 'and', 'two'], # compare curr1 and curr2 on a criteria
         ['the', 'best', 'highest', 'biggest', 'all', 'first'], # give the best on one criteria
         ['the', 'worst', 'all', 'last'], # and the worst
-        ['which', 'manga'] # find a manga with a particularity
+        ['which', 'manga', 'can', 'suggest', 'and'] # find a manga with a particularity
         ]
 
-def act(nb, ac):
+def act(nb, ac, crit=None):
         if ac==0:
                 return give_info(nb)
-        if ac==1:
+        elif ac==1:
                 return compare(nb)
         elif ac==2:
                 return highest(nb, sorted_manga)
+        elif ac==4:
+        		return find_manga(crit, sorted_manga)
   
 
 class Manga(dict):
@@ -99,11 +102,12 @@ def get_subject(nb, manga):
         elif nb == 8:
                 return manga.characters
         else:
+        		#TODO mode 1 ou 2 ?
                 return get_subject(random.randint(0,8), manga)
 
 def give_info(nb):
         if curr1 == None:
-                print("Bot: ",end='')
+            	#print("Bot: ",end='')
                 return 'What manga are you talking about ?'
         else:
                 return get_subject(nb, curr1)
@@ -201,12 +205,32 @@ def update_manga(sent, mlist):
         for m in mlist:
                 titl=f.tokenise_en(m.title)
                 if m.title != curr1 and f.contains_arr(sent, titl) >= 0.6:
-                        curr2 = curr1
-                        curr1 = m
-                        break
-                        # EUH attention aux histoires de copies là c ptet du pointeur
+                    curr2 = curr1
+                    curr1 = m
+                    break
+                    # EUH attention aux histoires de copies là c ptet du pointeur
 
+def determine_genre(sent):
+	global list_genre
+	genres = []
+	for w in sent:
+		for genre in list_genre:
+			if w == genre:
+				genres.append(genre)
+	return genres
 
+def find_manga(crit, sorted_manga):
+	if crit is not None:
+		nb_crit = len(crit)
+		if nb_crit==0:
+			return "There is no manga with this genres"
+		for manga in sorted_manga:
+			if set(crit).issubset(manga.genres):
+				return "It's a perfect match with " + manga.title
+			for genre in manga.genres:
+				if genre in crit:
+					return "It's match partly with " + manga.title
+	return "no match"
 
 def run():
 	file = open('mangalistfinal', 'r+b')
@@ -236,27 +260,38 @@ def run():
 	pickle.dump(manga_list, file)
 	print("ajout manga---")'''
 	global sorted_manga
+	global list_genre
 	listemangafini = []
 	listemangafini = pickle.load(file)
 	sorted_manga = order_by_rank(listemangafini)
 	nbmanga = 0
-	for manga in sorted_manga:
-		nbmanga = nbmanga + 1
+	for manga in listemangafini:
+		for genres in manga.genres:
+			if genres not in list_genre:
+				list_genre.append(genres)
+	print(list_genre)
+	#for manga in sorted_manga:
+		#nbmanga = nbmanga + 1
 		#manga.informations()
 		#print("~~~~~~~~~~")
 		#print("")
-	print(nbmanga)
-	i = 0
+		#print(nbmanga)
+		#i = 0
 	#for i in range (0, 100):
 		#print(sorted_manga[i].title, sorted_manga[i].rank)
 	while(True):
-                sent = f.tokenise_en(input("You: "))
-                th = determine_most(sent, vocabSubject)
-                update_manga(sent, sorted_manga)
-                action = determine_act(sent, actionToDo)
-                print("Bot: ",end='')
-                #f.type(str(get_subject(th, curr1)))
-                f.type(str(act(th, action)))
+		sent = f.tokenise_en(input("You: "))
+		th = determine_most(sent, vocabSubject)
+		update_manga(sent, sorted_manga)
+		action = determine_act(sent, actionToDo)
+		print("Bot: ",end='')
+		if action==4:
+			g = []
+			g = determine_genre(sent)
+			f.type(str(act(th, action, g)))
+		else:
+        #f.type(str(get_subject(th, curr1)))
+			f.type(str(act(th, action)))
 
 
 
