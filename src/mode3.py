@@ -25,15 +25,7 @@ def in_manga_list(m, arr, g):
 	return False
 
 #TODO
-'''
-def avg_year():
 
-def get_random_characters():
-
-def avg_chapters():
-
-def avg_nbFav
-'''
 def new_proposition(m, g):
 	global proposed_mangas
 	for prop in proposed_mangas:
@@ -43,6 +35,17 @@ def new_proposition(m, g):
 				break
 		except:
 			1
+
+def is_question(sent):
+	nb=0
+	arr=['why', 'you', '?']
+	for i in sent:
+		if i in arr:
+			nb+=1
+	if nb>=2:
+		return True
+	else:
+		return False
 
 def new_propositions(m, cr):
 	global proposed_mangas
@@ -73,6 +76,8 @@ def calc_avg(n):
 		try:
 			if n==8:
 				val=len(get_subject(n, m))
+			elif n==6:
+				val=float(get_subject(n, m).year)
 			else:
 				val=float(get_subject(n, m))
 			#print(get_subject(n, m))
@@ -118,23 +123,24 @@ def new_currents(m1, m2):
 # Un fichier qui contient les mots à détecter et des formulations pour répondre
 vocabSubject = [
         ['title', 'name', 'called'],
-        ['rank', 'ranked'],
+        ['rank', 'ranked', 'best'],
         ['genre', 'type'],
         ['favorites'],
-        ['rated', 'score', 'mark', 'good', 'bad'],
+        ['rated', 'score', 'mark', 'marks', 'good', 'bad'],
         ['number', 'chapters', 'long', 'short', 'finished', 'over'],
-        ['When', 'old', 'recent', 'published', 'date'],
+        ['when', 'recent', 'published', 'date'],
         ['author', 'wrote', 'written', 'created'],
         ['characters', 'character']
         ]
 
+# TODO : En realité ici il faudrait qu'il puisse savoir quand on dit oldest ou most recent :/ osef
 actionToDo = [
         [], # info about the current one
-        ['both', 'compare', 'between', 'and', 'two'], # compare curr1 and curr2 on a criteria
-        ['the', 'best', 'highest', 'biggest', 'all', 'first', 'most'], # give the best on one criteria
-        ['the', 'worst', 'all', 'last'], # and the worst
+        ['are', 'both', 'compare', 'between', 'and', 'two'], # compare curr1 and curr2 on a criteria
+        ['best', 'highest', 'biggest', 'all', 'first', 'most'], # give the best on one criteria
+        ['worst', 'all', 'last', 'least'], # and the worst
         ['give', 'manga', 'suggest', 'and'], # find a manga with a particularity
-        ['like', 'love'],
+        ['like', 'love', 'enjoy', 'favorite', 'favourite', 'prefer'],
 		['not', 'like', 'dislike', 'hate']
         ]
 
@@ -167,7 +173,8 @@ def dislike_manga():
 	sub, val = evaluate(curr1)
 	return "I hate "+curr1.title+" "+describe(sub, val)
 
-	
+#TODO : S'il n'a pas de chapitres dire il n'est pas fini	
+
 # TODO : Plutot que de dire : il a beaucoup de chapitres, dire : il en a tant
 # donc rajouter en paramètre le manga dont on parle
 def describe(sub, val):
@@ -195,7 +202,7 @@ def describe(sub, val):
 	else:
 		a = random.randint(0,3)
 		if a==0:
-			return "because I like its title" # + TITLE
+			return "because I like its title" # + TODO : TITLE
 		elif a==1:
 			return "because I like the author" # + AUTHOR
 		elif a==2:
@@ -204,8 +211,8 @@ def describe(sub, val):
 			return "because I like the characters" # + RANDOM CHARACTER(S)
 		
 
-def act(nb, ac, crit=None, second=0):
-	try:
+def act(nb, ac, question=False, crit=None):
+	#try:
 		if ac==0:
 			return give_info(nb)
 		elif ac==1:
@@ -218,16 +225,20 @@ def act(nb, ac, crit=None, second=0):
 			return find_manga(crit, sorted_manga)
 		elif ac==5:
 			if curr1.score >= avg_mark[1]:
-				return "I agree with you, "+like_manga()
+				res = "I agree with you, " if question==False else ""
+				return res+like_manga()
 			else:
-				return "I disagree, "+dislike_manga()
+				res = "I disagree with you, " if question==False else ""
+				return res+dislike_manga()
 		elif ac==6:
 			if curr1.score >= avg_mark[1]:
-				return "I disagree with you, "+like_manga()
+				res = "I disagree with you, " if question==False else ""
+				return res+like_manga()
 			else:
-				return "I agree, "+dislike_manga()
-	except:
-		return "That is not very clear..."
+				res = "I agree with you, " if question==False else ""
+				return res+dislike_manga()
+	#except:
+	#	return "That is not very clear..."
   
 
 class Manga(dict):
@@ -288,30 +299,34 @@ def get_subject(nb, manga):
         else:
                 return get_subject(random.randint(0,8), manga)
 
-def get_formulation(nb, manga):
+def get_formulation(nb, manga, pronoun=True):
+	noun = manga.title
+	if pronoun:
+		noun = f.get_random_elements([manga.title, 'it', 'this'], 1, 1)
+		noun=noun[0]
 	if nb == -1:
-		return "Yeah what about "+get_subject(0, manga)+" ?"
+		return "Yeah what about "+str(get_subject(0, manga))+" ?"
 	elif nb == 0:
-		return "It is called "+get_subject(nb, manga)+", yes !"
+		return noun+" is called "+str(get_subject(nb, manga))+" of course"
 	elif nb == 1:
-		return "Its rank is "+get_subject(nb, manga)
+		return noun+"'s rank is "+str(get_subject(nb, manga))
 	elif nb == 2:
-		return get_subject(nb, manga)
-		#TODO : return get_random_genres(1, len(manga.genres))+" are some of the genres of "+get_subject(nb, manga)
+		return f.arr_to_str(f.get_random_elements(manga.genres, 2, 4),",")+" are some of the genres of "+noun
 	elif nb == 3:
-		return manga.nb_favorites
+		return f.upper(noun)+" is the favorite manga of "+str(manga.nb_favorites)+" persons"
 	elif nb == 4:
-		return manga.score
+		return f.upper(noun)+" is rated "+str(manga.score)+"/10"
 	elif nb == 5:
-		return manga.nb_chapters
+		return f.upper(noun)+" has "+str(manga.nb_chapters)+" chapters"
 	elif nb == 6:
-		return manga.datePublication
+		return f.upper(noun)+" was written on "+str(manga.datePublication)
 	elif nb == 7:
-		return manga.authors
+		return "the author of "+noun+" is "+f.arr_to_str(manga.authors)
 	elif nb == 8:
-		return manga.characters
+		return f.arr_to_str(f.get_random_elements(manga.characters,1,4),',')+" are characters of "+manga.title
 	else:
-		return get_subject(random.randint(0,8), manga)
+		#print(nb)
+		return get_formulation(random.randint(0,8), manga)
 
 def give_info(nb):
         if curr1 == None:
@@ -326,10 +341,10 @@ def compare(nb):
         elif curr2 == None:
                 return 'You forgot to mention another manga...'
         else:
-                return str(get_subject(nb, curr1))+" and "+str(get_subject(nb, curr2))
+                return str(get_formulation(nb, curr1, False))+" and "+str(get_formulation(nb, curr2, False))
 
 def highest(nb, mlist, high=1):
-        if nb==0 or nb==2 or nb==6 or nb==7 or nb==8:
+        if nb==0 or nb==2 or nb==7 or nb==8:
                 return "You did not give me a good criteria..."
         else:
                 if nb == 1:
@@ -337,18 +352,24 @@ def highest(nb, mlist, high=1):
                 else:
                         coef=1
                 coef=coef*high
-                sc = coef*get_subject(nb, mlist[0])
+                try:
+                    sc = coef*int(get_subject(nb, mlist[0]).year)
+                except:
+                    sc = coef*get_subject(nb, mlist[0])
                 manga = mlist[0]
         for m in mlist:
                 try:
-                        tmp = coef*get_subject(nb, m)
+                        try:
+                            tmp = coef*int(get_subject(nb, m).year)
+                        except:
+                            tmp = coef*get_subject(nb, m)
                         if tmp > sc:
                                 sc = tmp
                                 manga = m
                 except:
                         1
         new_current(manga)
-        return str(manga.title)+" : "+str(get_subject(nb, manga))
+        return str(get_formulation(nb, manga, False))
 
 
 def create_manga_list(nombre):
@@ -409,13 +430,12 @@ def determine_act(sent, arr):
 def update_manga(sent, mlist):
         global curr1
         global curr2
+        first = 0
         count = 0
         for m in mlist:
                 titl=f.tokenise_en(m.title)
                 if m.title != curr1 and f.contains_arr(sent, titl) >= 0.6:
                     new_current(m)
-                    break
-                    # EUH attention aux histoires de copies là c ptet du pointeur
 
 def determine_genre(sent):
 	global list_genre
@@ -443,7 +463,7 @@ def find_manga(crit, sorted_manga):
 				#if second==0:
 				new_propositions(manga, crit)
 				new_current(manga)
-				return "It's a perfect match with " + manga.title
+				return "This matches perfectly with " + manga.title
 				#if second==1:
 				#	second -= 1
 				#	continue
@@ -452,8 +472,8 @@ def find_manga(crit, sorted_manga):
 				if genre in crit and in_manga_list(manga.title,proposed_mangas, genre)==False:
 					new_proposition(manga, genre)
 					new_current(manga)
-					return "It's match partly with " + manga.title
-	return "no match"
+					return "I could propose you " + manga.title
+	return None
 
 def run():
 	file = open('mangalistfinal', 'r+b')
@@ -521,11 +541,6 @@ def run():
 	avg_year = calc_avg(6)
 	avg_char = calc_avg(8)
 	
-	print(avg_mark)
-	print(avg_chap)
-	print(avg_fav)
-	print(avg_year)
-	
 	while(True):
 		sent = f.tokenise_en(input("You: "))
 		th = determine_most(sent, vocabSubject)
@@ -535,10 +550,10 @@ def run():
 		if action==4:
 			g = []
 			g = determine_genre(sent)
-			f.type(str(act(th, action, g)))
+			f.type(str(act(th, action, is_question(sent), g)))
 		else:
         #f.type(str(get_subject(th, curr1)))
-			f.type(str(act(th, action)))
+			f.type(str(act(th, action, is_question(sent))))
 		# TODO : Avec une certaine proba appeler le mode 2 ?
 
 

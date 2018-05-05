@@ -3,6 +3,41 @@ import re
 import time
 import random
 
+def upper(w):
+    try:
+        a=list(w)
+        a[0] = a[0].upper()
+        return str("".join(a))
+    except:
+        return str(w)
+
+def get_random_elements(arr, mini, maxi):
+    if mini<0:
+        mini=0
+    if maxi>len(arr):
+        maxi=len(arr)
+    if maxi<0:
+        maxi=0
+    if mini>len(arr):
+        mini=len(arr)
+    tab=[]
+    for i in range(random.randint(mini, maxi)):
+        a=random.randint(0, len(arr)-1)
+        while(arr[a] in tab):
+            a=random.randint(0, len(arr)-1)
+        #print(arr[a])
+        tab.append(arr[a])
+    return tab
+
+def arr_to_str(arr, sep=''):
+    res=""
+    if len(arr)>1:
+        for i in range(0, len(arr)-1):
+            res+=str(arr[i])+sep+" "
+        res+="and "
+    res+=arr[len(arr)-1]
+    return res
+
 #returns a number between 0 and 1 to tell how much of b a contains
 def contains_arr(a, b):
     sc = 0
@@ -14,9 +49,9 @@ def contains_arr(a, b):
             except:
                 if i==j:
                     sc+=1
-    return sc/len(b)
+    return float(float(sc)/float(len(b)))
 
-def max_index(arr, r=0):
+def max_index(arr, r=0, c=1):
     sc = arr[0]
     ind = 0
     if len(arr) > 1:
