@@ -37,9 +37,10 @@
 %\usepackage{sectsty} % Allows customising section commands
 \usepackage{fancyhdr} % Custom headers and footers
 \pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
-\fancyhead{} % header
-\fancyfoot[L]{} % left footer
-\fancyfoot[C]{\thepage} % centre footer
+\fancyhead[L]{\rightmark}
+\fancyhead[R]{Weeabot}
+\renewcommand{\footrulewidth}{1pt}
+\fancyfoot[C]{\textbf{page \thepage/\pageref{LastPage}}} 
 \fancyfoot[R]{}  % right footer
 \renewcommand{\headrulewidth}{1pt} 
 \renewcommand{\footrulewidth}{1pt} 
@@ -50,11 +51,74 @@
 \usepackage{graphicx} % graphics package
 
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  % Le contenu de votre document commence ici
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
+
+\begin{titlepage}
+		
+		\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+		
+		\center % Center everything on the page
+		
+		%----------------------------------------------------------------------------------------
+		%	HEADING SECTIONS
+		%----------------------------------------------------------------------------------------
+		
+		\textsc{\LARGE Polytech Paris-Sud}\\[1.5cm] % Name of your university/college
+		\textsc{\Large Traitement Automatique du Langage }\\[0.5cm] % Major heading such as course name
+		\textsc{\large Création d'un Chatbot Weeaboo}\\[0.5cm] % Minor heading such as course title
+		
+		%----------------------------------------------------------------------------------------
+		%	TITLE SECTION
+		%----------------------------------------------------------------------------------------
+		
+		\HRule \\[0.65cm]
+		{ \huge \bfseries WEEABOT}\\[0.4cm] % Title of your document
+		\HRule \\[1.5cm]
+		
+		%----------------------------------------------------------------------------------------
+		%	AUTHOR SECTION
+		%----------------------------------------------------------------------------------------
+		
+		\begin{minipage}{0.4\textwidth}
+			\begin{flushleft} \large
+				\emph{\textbf{Auteurs:}}\\
+				Alban \textsc{DESCOTTES}\\ % Your name
+				Camille \textsc{FOSSIER}\\ % Your name
+				Mohamed \textsc{BELDI}\\ % Your name
+			\end{flushleft}
+		\end{minipage}
+		~
+		\begin{minipage}{0.4\textwidth}
+			\begin{flushright} \large
+				\emph{\textbf{Superviseur:}} \\
+				Rachel \textsc{BAWDEN} % Supervisor's Name
+			\end{flushright}
+		\end{minipage}\\[3cm]
+		
+		%----------------------------------------------------------------------------------------
+		%	DATE SECTION
+		%----------------------------------------------------------------------------------------
+		\includegraphics[width=0.8\linewidth]{polytech.png}\\[1cm] % Include a department/university logo - this will require the graphicx package
+		{\large 5 mai 2018}\\[2cm] % Date, change the \today to a set date if you want to be precise
+		
+		%----------------------------------------------------------------------------------------
+		%	LOGO SECTION
+		%----------------------------------------------------------------------------------------
+		
+		
+		
+		
+		%----------------------------------------------------------------------------------------
+		
+		\vfill % Fill the rest of the page with whitespace
+		
+	\end{titlepage}
+
 
 \title{Voici votre titre}
 \author{Les auteurs - c'est vous}

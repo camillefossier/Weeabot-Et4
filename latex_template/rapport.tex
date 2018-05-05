@@ -1,0 +1,214 @@
+\documentclass[paper=a4, fontsize=11pt]{article}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Find below lists of packages to include, commands and macros
+% that may be useful later on in your document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[margin=0.9in]{geometry} % margin size
+
+% choose language and encoding options
+\usepackage[frenchb]{babel}
+% \usepackage[english]{babel}  % decomment to use English
+\usepackage[utf8]{inputenc}
+
+% some useful options for tables and arrays
+\usepackage{booktabs}
+\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+% fonts
+%\usepackage{libertine}
+
+% custom colors - you can define your own colours
+\usepackage{color}
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
+
+% maths
+\usepackage{amsmath}
+
+% misc
+\usepackage{url}
+
+% page formating with the "fancy header" package
+%\usepackage{sectsty} % Allows customising section commands
+\usepackage{fancyhdr} % Custom headers and footers
+\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+\fancyhead[L]{\rightmark}
+\fancyhead[R]{Rapport-Weeabot}
+\renewcommand{\footrulewidth}{1pt}
+\fancyfoot[C]{\textbf{\thepage}} 
+\fancyfoot[R]{}  % right footer
+\renewcommand{\headrulewidth}{1pt} 
+\renewcommand{\footrulewidth}{1pt} 
+\setlength{\headheight}{13.6pt} % Customize the height of the header
+
+%\usepackage{lipsum} % generate dummy text
+\usepackage{amsmath,amsfonts,amsthm} % maths packages
+\usepackage{graphicx} % graphics package
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ % Le contenu de votre document commence ici
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\begin{titlepage}
+		
+		\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+		
+		\center % Center everything on the page
+		
+		%----------------------------------------------------------------------------------------
+		%	HEADING SECTIONS
+		%----------------------------------------------------------------------------------------
+		
+		\textsc{\LARGE Polytech Paris-Sud}\\[1.5cm] % Name of your university/college
+		\textsc{\Large Traitement Automatique du Langage }\\[0.5cm] % Major heading such as course name
+		\textsc{\large Création d'un Chatbot Weeaboo}\\[0.5cm] % Minor heading such as course title
+		
+		%----------------------------------------------------------------------------------------
+		%	TITLE SECTION
+		%----------------------------------------------------------------------------------------
+		
+		\HRule \\[0.65cm]
+		{ \huge \bfseries Weeabot}\\[0.4cm] 
+		\HRule \\[1.5cm]
+		
+		%----------------------------------------------------------------------------------------
+		%	AUTHOR SECTION
+		%----------------------------------------------------------------------------------------
+		
+		\begin{minipage}{0.4\textwidth}
+			\begin{flushleft} \large
+			\vspace{1.2cm}
+				\emph{\textbf{Auteurs:}}\\
+				Mohamed \textsc{BELDI}\\
+				Alban \textsc{DESCOTTES}\\ 
+				Camille \textsc{FOSSIER}\\ 
+			\end{flushleft}
+		\end{minipage}
+		~
+		\begin{minipage}{0.4\textwidth}
+			\begin{flushright} \large
+				\emph{\textbf{Superviseur:}} \\
+				Rachel \textsc{BAWDEN} % Supervisor's Name
+			\end{flushright}
+		\end{minipage}\\[3cm]
+		
+		%----------------------------------------------------------------------------------------
+		%	DATE SECTION
+		%----------------------------------------------------------------------------------------
+		\includegraphics[width=0.8\linewidth]{polytech.png}\\[1cm]
+		{\large 5 mai 2018}\\[2cm] 
+		
+		%----------------------------------------------------------------------------------------
+		%	LOGO SECTION
+		%----------------------------------------------------------------------------------------
+		
+		
+		
+		
+		%----------------------------------------------------------------------------------------
+		
+		\vfill
+	\end{titlepage}
+
+\section{Introduction}
+
+\subsection{Objectif du projet}
+L'objectif de ce projet a été la réalisation d'un chatbot fonctionnel, ainsi, nous avons décidé de réaliser un chatbot Weeaboo nommé Weeabot. Le mot Weeaboo est un mot désignant les admirateurs fous de tout ce qui concerne le Japon. \\
+Cependant, nous avons choisi d'orienter l'aspect Weeaboo de notre bot sur les mangas, qui sont les bandes dessinées japonaises. Ainsi, le Weeabot sera susceptible de discuter avec l'utilisateur à propos de certains mangas et même de donner son avis dessus. \\
+Cette idée nous est venu du fait qu'un membre de notre groupe aime beaucoup les mangas et nous nous sommes dit que cela pouvait être un sujet avec énormément de matière à travailler.
+
+\subsection{Mise en oeuvre du projet}
+Les modes 1 et 2 étant des modes génériques, nous allons nous pencher ici plus particulièrement sur le mode 3 qui est le mode le plus original et travaillé. Afin de nous simplifier la tâche concernant la base de données du Weeabot, nous avons utilisé la base de données du site \url{https://myanimelist.net/} qui est un site recensant la majorité des mangas et dessin animés japonais.\\
+Il a été décidé que le Weeabot parlerait anglais étant donné que c'est une langue possédant des règles de grammaire et de conjugaison moins compliquées que le français, son implémentation serait donc plus simple et éviterait des erreurs syntaxiques.\\
+
+
+\section{Fonctionnement du Weeabot}
+
+\subsection{Structure du Weeabot}
+
+Afin d'avoir une base de données de mangas sur laquelle travailler pour le mode 3, nous avons tout d'abord voulu nous pencher sur le module \texttt{BeautifulSoup}, mais après quelques recherches nous nous sommes rendus compte qu'il existait un module nommé \texttt{myanimelist} qui s'occupait d'extraire les informations de \texttt{myanimelist.net} pour nous, il nous a donc suffit de nous documenter sur ce module et d'enregistrer les données localement à l'aide de \texttt{pickle} afin de ne pas avoir à les retélécharger. \\
+
+La structure du mode 3 du Weeabot est simple :\\
+
+L’analyse de la structure de la phrase se fait en parsant plusieurs fois d’affilée les mots qui la composent afin d’identifier, si on parle d’un manga précis, d’un genre de manga précis, si on spécifie une action particulière, etc.\\
+Nous avons donc pour chacun de ces thèmes à vérifier un vocabulaire qui va être parcouru, afin de compter les mots qui sont le plus présents dans la phrase et essayer de comprendre le souhait de l’utilisateur. Plusieurs catégories peuvent contenir les mêmes mots de détection, nous avons donc mis en place un compteur qui indique lequel est le plus probable. \\
+D’abord, nous cherchons donc un nom de manga. Si on en trouve un, on actualise les deux mangas actuels de façon à garder en mémoire le manga dont on parle.\\
+\textit{Exemple : Si auparavant nous avions parlé de Naruto et de Dragon Ball, puis que nous mentionnons Berserk, Dragon Ball sera supprimé de la liste, Naruto passera en deuxième position et Berserk en première. Nous avons choisi d’en garder deux de façon à pouvoir effectuer des comparaisons entre les deux en mémoire.}\\
+
+Ensuite, si on trouve un ou plusieurs genres, une fonction s’occupe de trouver un manga qui contient l’intégralité des genres mentionnés par l’utilisateur. S’il n’en trouve pas il cherche un manga qui en contient au moins un. Puis il garde en mémoire le résultat qu’il a fourni. \\
+\textit{Exemple : Si je demande un manga d’action et d’aventure, le Weeabot me proposera par exemple Naruto, mais si je lui redemande un manga uniquement d’action, il ne me proposera plus Naruto qu’il m’a déjà donné avant.}\\ De plus si je demande un manga qui se passe dans l’espace, d’amour et qui soit en plus d’action et de comédie, il est probable que le Weeabot ne me fournisse qu’un manga se passant dans l’espace. \\
+
+Pour détecter l’action souhaitée par l’utilisateur on fonctionne à nouveau sur un système de mots clefs qui permettent de savoir si on veut le meilleur manga dans une catégorie, comparer deux mangas, ou juste obtenir des informations. Une fois cela détecté, nous avons une simple fonction qui génère des phrases en fonction de ce que recherche l’utilisateur en concaténant des structures de phrases prédéfinies avec les champs du manga correspondant. \\
+Une de ces actions est de demande au bot s’il apprécie le manga ou nom et s’il est d’accord avec nous. Il se base sur la note moyenne des mangas présents dans la base de données, et prend toujours parti de la population générale.\\
+\textit{Exemple : Si un manga est bien noté mais que l’utilisateur dit ne pas l’aimer, alors le Weeabot dira qu’il n’est pas d’accord avec nous et se justifiera.} \\
+La justification du Weeabot quant à la qualité d’un manga se fait en partie par des critères chiffrés. Pour le manga à évaluer il regarde celui qui s’éloigne le plus de la moyenne générale pour fonder son argument. Pour simplifier il nous dit par quoi le manga se démarque. \\
+
+\textit{Exemple : Si on considère un manga dont la note est très proche de la note moyenne globale, dont le nombre de chapitres est proche du nombre moyen global, etc. Mais que ce manga est très vieux comparé aux autres, alors il dira qu’il apprécie le manga car il est plus ancien que les autres.} \\
+Il y a également un facteur aléatoire qui fait que le bot peut se justifier par des critères différents, par exemple qu’il aime l’auteur, ou le titre du manga, etc.
+Ce facteur aléatoire a été incorporé à plusieurs endroits pour diversifier la conversation, par exemple pour éviter que le bot ne répète constamment la même information quand l’utilisateur ne montre pas de volonté précise d’informations dans une phrase, et cela en appliquant au hasard des thèmes de discussion, ou même en appelant le système de réponse du mode 2. \\
+
+
+\subsection{Capacités du Weeabot}
+Le Weeabot possède 3 modes, le mode 1 étant le plus simple et le 3 le plus avancé. Nous avons aussi simulé le fait qu'une personne réelle soit en train de nous répondre en tapant sur son clavier à l'aide d'intervalles aléatoires.\\
+
+\begin{itemize}
+\item[$\bullet$] \textbf{Mode 1 :} Ce mode correspond à celui décrit dans l'énoncé, il répond seulement des onomatopées ou acquiesce à ce que l'utilisateur dit, sans y prêter attention.\\ Il fait cependant attention à ne pas utiliser la même onomatopée ou le même mot à la suite.\\
+\item[$\bullet$] \textbf{Mode 2 :} Dans ce mode il existe une meilleure interaction entre l'utilisateur et le Weeabot, celui ci possède un panel de phrases prédéfinies correspondant à plusieurs thèmes. Il va piocher aléatoirement dans ses réponses possibles en prenant garde à ne pas choisir la même phrase deux fois de suite pour le même thème. \\
+Nous avons essayé de faire en sorte qu'il ait certaines réactions en fonction du comportement de l'utilisateur, par exemple si l'utilisateur répète plusieurs fois de suite la même phrase, il lui fera remarquer.\\
+\item[$\bullet$] \textbf{Mode 3 :} C'est dans ce mode que le Weeabot révèle son côté Weeaboo en parlant essentiellement de mangas. À l'aide de sa base de données qui contient plusieurs centaines de mangas et leurs informations provenant de \url{https://myanimelist.net/}, il peut nous renseigner sur le classement du manga sur ce site, son genre, le nombre de personnes l'ayant en favori, la note que lui ont mis les utilisateurs du site, son nombre de chapitres, sa date de publication, son ou ses auteurs et enfin ses personnages. \\
+Nous pouvons demander plusieurs informations à la suite sur le même manga grâce au fait qu'il garde toujours le dernier manga en mémoire. Ainsi nous avons la possibilité de comparer des mangas de demander le rang de l'un et de dire \texttt{what about [other manga title]?} afin que l'on nous donne l'information pour l'autre manga. \\
+Il est aussi possible de donner son avis sur un manga en disant si on l'aime ou non, et le Weeabot nous donnera son avis sur ce manga en fonction de critères se basant sur la popularité et la moyenne des mangas de sa base de données. \\
+Par exemple si nous lui disons \texttt{I like Naruto}, il nous répondra qu'il est d'accord avec nous en nous donnant un critère aléatoire qu'il aime bien (\textit{sa longueur, son rang, sa popularité...}).\\
+Si nous voulons lire un type de manga en particulier nous pouvons demander conseil au Weeabot et il choisira le manga le mieux classé correspondant au genre que nous lui avons demandé. \\
+Bien sûr nous pouvons demander un manga correspondant à plusieurs genres et s'il n'en trouve aucun dans sa liste, il nous le fera savoir. Par exemple nous pouvons lui dire \texttt{give me a manga with adventure genre} et il nous donnera le titre d'un manga par contre, si nous lui disons \texttt{give me a manga with adventure and action genre} il nous donnera le titre d'un autre manga.\\
+Bien sûr s'il ne trouve aucune réponse possible il essaye de répondre en utilisant le mode 2 et si il ne trouve rien à dire il utilise une réponse du mode 1.\\
+\end{itemize}
+
+\subsection{Limites du Weeabot}
+Malheureusement, le Weeabot n'est pas parfait...
+Le vocabulaire utilisé pour détecter le souhait de l’utilisateur n’est peut-être pas assez développé dans le mode 2 et il y a probablement des risques de collisions de vocabulaire de déclenchement pour ces modes. De plus il arrive que la réponse à la question soit \texttt{None}, ce qui provient de cas (rares) de non information concernant un sujet précis sur un certain manga, et qui n’ont pas été traité lors de la rédaction des phrases réponses.\\
+Par exemple on ne connait pas le nombre de chapitres d'un manga qui n'est pas fini, par conséquent quand on demandera son nombre de chapitres, le Weeabot nous répondra \texttt{None}, et même en essayant d'y remédier nous n'y sommes pas encore parvenu. \\
+
+Il subsiste malheureusement quelques bugs qui concerneraient la liaison entre les différents modes qui peut ne pas fonctionner dans certains cas. Il se trouve que notre manière de détecter le vocabulaire dans le mode 3 n'est pas forcément la meilleure et on a donc du quelque fois du mal à obtenir la réponse à la question que l'on a posé si celle ci est mal formulée.\\ 
+Un autre problème que nous avons détecter mais pour lequel nous n'avons pas de solution est le fait que le nom d'un manga contienne le début du nom d'un autre manga, c'est le cas entre \texttt{One} et \texttt{One Piece}, ainsi dans certains cas le Weeabot confondra les deux.\\
+
+\section{Bilan du projet}
+
+\subsection{Répartition des tâches}
+Concernant la distribution des tâches nous avons essayé de tous travailler de manière équitable. Le sujet a rapidement été trouvé donc nous avons rapidement pu nous mettre au travail.\\
+Le taux de participation sur le github n'est pas forcément représentatif du travail fourni par chacun (bien que Camille ait fourni une grande quantité de travail), en effet, nous avons plusieurs fois codé à plusieurs en nous échangeant des bouts de code et malgré le fait que Mohamed utilisait le shell de son ordinateur pour commit, il n'apparait pas parmis les contributeurs.\\
+
+Pour résumer : \\
+
+\begin{itemize}
+\item[$\bullet$] \textbf{Camille :} Réalisation des modes 1 et 2 et de plusieurs fonctions du mode 3.\\
+\item[$\bullet$] \textbf{Alban :} Réalisation de plusieurs fonctions des mode 2 et 3.\\
+\item[$\bullet$] \textbf{Mohamed :} Plusieurs recherches et fonctions pour le mode 3 ainsi que le téléchargement et le stockage des données.\\
+\end{itemize}
+Nous avons tous contribué à la rédaction de ce rapport.\\
+
+\subsection{Améliorations à apporter}
+
+La première amélioration à apporter serait évidemment plus de stabilité ainsi que corriger tous les bugs enoncés précédemment. Il serait intéressant d'agrandir la base de données de manga et de faire en sorte que celle-ci soit connectée en temps réel au site web afin d'avoir toutes les informations sur le manga mises à jour, ou encore l'étendre au domaine de l'animation japonaise.\\
+Ainsi, on aurait accès au nombre de chapitres d'un manga en cours de parution.
+Concernant le bot, il faudrait lui donner un peu plus de vie, en lui permettant d'avoir plus de phrases de réponses, qu'il pourrait construire lui-même, dans le but d'avoir une interaction qui nous semble plus réelle.\\
+Il serait aussi original que le bot utilise certaines mimiques et expressions propres aux weeaboos, qui adore inclure des mots japonais dans leur phrase, cela lui donnerait une certaine personnalité et renforcerait son identité de Weeabot.\\
+
+\subsection{Conclusion}
+
+
+
+
+
+
+
+\end{document}
