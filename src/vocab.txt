@@ -1,0 +1,1446 @@
+###
+ancestor
+aunt
+bride
+bridegroom
+brother
+brother-in-law
+child
+children
+clan
+cousin
+dad
+daughter
+daughter-in-law
+descendant
+extended family
+family
+family tree
+father
+father-in-law
+first cousin
+first cousin once removed
+genealogy
+grampa
+grandchild
+grandchildren
+granddaughter
+grandfather
+grandma
+grandmother
+grandpa
+grandparent
+grandson
+granny
+great-granddaughter
+great-grandfather
+great-grandmother
+great-grandparent
+great-grandson
+great-aunt
+great-uncle
+groom
+half-brother
+half-sister
+heir
+heiress
+husband
+in-laws
+kin
+kindred
+kinship
+lineage
+ma
+mama
+mate
+matriarch
+mom
+mother
+mother-in-law
+nana
+nephew
+niece
+nuclear family
+pa
+papa
+parent
+patriarch
+pop
+quadruplets
+quads
+quints
+quintuplets
+related
+relations
+relatives
+second cousin
+sibling
+sister
+sister-in-law
+son
+son-in-law
+spouse
+stepbrother
+stepchild
+stepchildren
+stepdad
+stepdaughter
+stepfather
+stepmom
+stepmother
+stepsister
+stepson
+tribe
+triplets
+twin brother
+twin sister
+twins
+uncle
+wife
+#
+Tell me more about your family
+Do you think you received the perfect education ?
+How old were your parents when you were born ?
+###
+acorn squash
+alfalfa sprouts
+almond
+anchovy
+anise
+appetizer
+appetite
+apple
+apricot
+artichoke
+asparagus
+aspic
+ate
+avocado
+bacon
+bagel
+bake
+bamboo shoots
+banana
+barbecue
+barley
+basil
+batter
+beancurd
+beans
+beef
+beet
+bell pepper
+berry
+biscuit
+bitter
+blackbeans
+blackberry
+black-eyed peas
+bland
+blood orange
+blueberry
+boil
+bowl
+boysenberry
+bran
+bread
+breadfruit
+breakfast
+broccoli
+broil
+brownie
+brown rice
+brunch
+Brussels sprouts
+buckwheat
+buns
+burrito
+butter
+cake
+calorie
+candy
+cantaloupe
+capers
+caramel
+carbohydrate
+carrot
+cashew
+cassava
+casserole
+cater
+cauliflower
+cayenne pepper
+celery
+cereal
+chard
+cheddar
+cheese
+cheesecake
+chef
+cherry
+chew
+chicken
+chick peas
+chili
+chips
+chives
+chocolate
+chopsticks
+chow
+chutney
+cilantro
+cinnamon
+citron
+citrus
+clam
+cloves
+cobbler
+coconut
+cod
+coffee
+coleslaw
+collard greens
+cook
+cookie
+corn
+cornflakes
+cornmeal
+cottage cheese
+crab
+crackers
+cranberry
+cream
+cream cheese
+crepe
+crisp
+crunch
+crust
+cucumber
+cuisine
+cupboard
+cupcake
+curds
+currents
+curry
+custard
+daikon
+dairy
+dandelion greens
+Danish pastry
+dates
+dessert
+diet
+digest
+digestive system
+dill
+dine
+diner
+dinner
+dip
+dish
+dough
+doughnut
+dragonfruit
+dressing
+dried
+drink
+dry
+durian
+eat
+Edam cheese
+egg
+eggplant
+elderberry
+endive
+entree
+fast
+fava bans
+fed
+feed
+fennel
+fig
+fillet
+fire
+fish
+flan
+flax
+flour
+food
+food pyramid
+fork
+freezer
+French fries
+fried
+fritter
+frosting
+fruit
+fry
+garlic
+gastronomy
+gelatin
+ginger
+gingerale
+gingerbread
+glasses
+Gouda cheese
+grain
+granola
+grape
+grapefruit
+grated
+gravy
+greenbean
+greens
+gyro
+guava
+herbs
+halibut
+ham
+hamburger
+hash
+hazelnut
+herbs
+honey
+honeydew
+horseradish
+hot
+hot dog
+hot sauce
+hummus
+hunger
+hungry
+ice
+iceberg lettuce
+iced tea
+icing
+ice cream
+ice cream cone
+jackfruit
+jalapeno
+jam
+jelly
+jellybeans
+jicama
+jimmies
+Jordan almonds
+jug
+juice
+kale
+kebab
+ketchup
+kettle
+kidney beans
+kitchen
+kiwi
+knife
+kohlrabi
+kumquat
+ladle
+lamb
+lard
+lasagna
+legumes
+lemon
+lemonade
+lentils
+lettuce
+licorice
+Lima beans
+lime
+liver
+loaf
+lobster
+lollipop
+loquat
+lox
+lunch
+lunchmeat
+lychee
+macaroni
+macaroon
+main course
+maize
+mandarin orange
+mango
+maple syrup
+margarine
+marionberry
+marmalade
+marshmallow
+mashed
+mayonnaise
+meat
+meatballs
+meatloaf
+melon
+menu
+meringue
+milk
+milkshake
+millet
+mincemeat
+minerals
+mint
+mints
+molasses
+mozzarella
+muffin
+mug
+munch
+mushroom
+mussels
+mustard
+mustard greens
+mutton
+napkin
+nectar
+nectarine
+nibble
+noodles
+nosh
+nourish
+nourishment
+nut
+nutmeg
+oats
+oatmeal
+oil
+okra
+oleo
+olive
+omelet
+omnivore
+onion
+orange
+order
+oregano
+oven
+oyster
+pan
+pancake
+papaya
+parsley
+parsnip
+pasta
+pastry
+pate
+patty
+pattypan squash
+peach
+peanut
+peanutbutter
+pea
+pear
+pecan
+peapod
+pepper
+pepperoni
+persimmon
+pickle
+picnic
+pie
+pilaf
+pineapple
+pita bread
+pitcher
+pizza
+plate
+platter
+plum
+poached
+pomegranate
+pomelo
+pop
+popsicle
+popcorn
+popovers
+pork
+pork chops
+pot
+potato
+preserves
+pretzel
+protein
+prune
+pudding
+pumpernickel
+pumpkin
+punch
+quiche
+quinoa
+radish
+raisin
+raspberry
+ravioli
+recipe
+refrigerator
+relish
+restaurant
+rhubarb
+ribs
+rice
+roast
+roll
+rolling pin
+romaine
+rosemary
+rye
+saffron
+sage
+salad
+salami
+salmon
+salsa
+salt
+sandwich
+sauce
+sauerkraut
+sausage
+savory
+scallops
+scrambled
+seaweed
+seeds
+sesame seed
+shallots
+sherbet
+shish kebab
+shrimp
+slaw
+slice
+smoked
+soda
+sole
+sorbet
+sorghum
+sorrel
+soup
+sour
+sour cream
+soy
+soybeans
+soysauce
+spaghetti
+spareribs
+spatula
+spices
+spinach
+spoon
+spork
+sprinkles
+sprouts
+spuds
+squash
+squid
+steak
+stew
+stir-fry
+stomach
+stove
+straw
+strawberry
+string bean
+stringy
+strudel
+succotash
+sugar
+summer squash
+sundae
+sunflower
+supper
+sushi
+sweet
+sweet potato
+Swiss chard
+syrup
+taco
+take-out
+tamale
+tangerine
+tapioca
+taro
+tarragon
+tart
+tea
+teapot
+teriyaki
+thyme
+toast
+toaster
+toffee
+tofu
+tomatillo
+tomato
+torte
+tortilla
+tuber
+tuna
+turkey
+turmeric
+turnip
+ugli fruit
+unleavened
+utensils
+vanilla
+veal
+vegetable
+venison
+vinegar
+vitamins
+wafer
+waffle
+walnut
+wasabi
+water
+water chestnut
+watercress
+watermelon
+wheat
+whey
+whipped cream
+wok
+yam
+yeast
+yogurt
+yol
+zucchini
+#
+What is your favourite meal ?
+Would you consider Nutella is bad for you ?
+What would you want to eat or drink right now ?
+###
+archery
+arena
+arrow
+athlete
+athletics
+ball
+base
+baseball
+basketball
+bat
+baton
+batter
+bicycle
+bike
+bocce
+bow
+bowling
+bunt
+catch
+catcher
+champion
+cleats
+club
+competition
+competitor
+cross country
+curling
+cycling
+dart
+darboard
+defense
+diamond
+discus
+dive
+epee
+equipment
+exercise
+field
+fielder
+football
+game
+gear
+go
+goal
+goalie
+golf
+guard
+gym
+gymnastics
+halftime
+handball
+hang gliding
+hardball
+helmet
+high jump
+hole-in-one
+home
+home plate
+home team
+hockey
+hoop
+ice skates
+infield
+inline skates
+inning
+javelin
+jog
+judo
+jump
+jump rope
+karate
+kneepads
+league
+lose
+luge
+major league
+martial arts
+mat
+medal
+minor league
+mitt
+move
+MVP
+net
+offense
+Olympics
+out
+outfield
+paddle
+ping pong
+pitch
+pitcher
+play
+player
+playoffs
+pole
+polo
+pool
+puck
+quarter
+quarterback
+race
+racket
+referee
+relay
+ride
+roller skates
+rugby
+run
+score
+scoreboard
+scuba
+shortstop
+ski
+sled
+snowboard
+soccer
+softball
+somersault
+sport
+sportsmanship
+squash
+stadium
+stick
+strike
+stroke
+swim
+table tennis
+target
+team
+teammate
+tee
+tennis
+tetherball
+throw
+tie
+track and field
+trampoline
+umpire
+unicycle
+uniform
+vault
+visiting team
+volley
+volley ball
+walk
+waterski
+wetsuit
+win
+#
+Do you like sports ?
+Which sports do you like ?
+Do you feel like doing some sports right now ?
+###
+aardvark
+abalone
+African wild cat
+albatross
+algae
+agouti
+alpaca
+amoeba
+American bison
+amphibian
+ant
+anteater
+antelope
+ape
+aphid
+arachnid
+arctic fox
+arctic wolf
+armadillo
+arthropod
+aye-aye
+baboon
+badger
+bandicoot
+barnacle
+barracuda
+bass
+bat
+bear
+beaver
+bedbug
+bee
+bilby
+bison
+bivalve
+black bear
+black bear hamster
+blackbird
+bluebird
+bluejay
+blue whale
+bobcat
+bongo
+bonobo
+bowhead whale
+brittle star
+brown bear
+bug
+buffalo
+bull
+bullfrog
+bumblebee
+bushbaby
+butterfly
+camel
+canary
+cape buffalo
+capybera
+caracal
+cardinal
+caribou
+carnivora
+carpenter ant
+cassowary
+cat
+caterpillar
+cattle
+cavy
+cheetah
+chickadee
+chicken
+chimipanzee
+chinchilla
+chipmunk
+chiton
+chrysalis
+cicada
+clam
+coati
+cockatoo
+cod
+coelacanth
+cockroach
+collared peccary
+colugo
+conch
+copepod
+coral
+cougar
+cow
+coyote
+coypu
+crab
+crane
+cricket
+crow
+crustacean
+cuttlefish
+cutworm
+damselfly
+deer
+dhole
+diatom
+dingo
+dodo
+dog
+dogfish
+dolphin
+donkey
+dove
+dragonfly
+dromedary
+duck
+dugong
+duck-billed platypus
+eagle
+earthworm
+earwig
+echidna
+eel
+egg
+egret
+ekaltadelta
+eland
+elephant
+elephant seal
+elk
+emu
+ermine
+falcon
+ferret
+finch
+fin whale
+fireant
+firefly
+fish
+flamingo
+flatworm
+flea
+flounder
+fly
+flying fish
+flying squirrel
+fossa
+fowl
+fox
+frog
+fruit bat
+galagos
+gar
+gazelle
+gerbil
+giant squid
+gibbon
+giraffe
+gnat
+gnu
+goat
+goldfinch
+goose
+gopher
+gorilla
+grasshopper
+gray whale
+great apes
+grizzly bear
+groundhog
+grouper
+grouse
+grub
+guinea pig
+gull
+hammerhead shark
+hamster
+hares
+harp seal
+hawk
+hedgehog
+hen
+hermit crab
+heron
+herring
+hippo
+hippopotamus
+honey bee
+hornet
+horse
+horseshoe crab
+housefly
+howler monkey
+human being
+hummingbird
+humpback whale
+hyena
+hyrax
+ibis
+imago
+impala
+insect
+insectivores
+isopod
+jaguar
+javelina
+jay
+jellyfish
+jumping bean
+junebug
+junco
+kakapo
+kangaroo
+katydid
+killer whale
+kinkajou
+kiwi
+koala
+kookaburra
+krill
+Kudu
+ladybug
+lagomorph
+larva
+lemming
+lemur
+leopard
+lice
+limpet
+lion
+llama
+lobster
+locust
+loggerehad turtle
+longhorn
+loon
+lorikeet
+loris
+louse
+lynx
+macaque
+macaw
+mackerel
+maggot
+mako shark
+mallard duck
+mammal
+mammoth
+manatee
+mandrill
+man-o'-war
+manta ray
+mantid
+marine mammals
+marmoset
+marmot
+marsupial
+mastodon
+meadowlark
+mealworm
+meerkat
+merganser
+midge
+mink
+mice
+mockingbird
+mole
+mollusk
+monarch butterfly
+mongoose
+monkey
+moose
+moray eel
+morpho butterfly
+mosquito
+moth
+mouse
+mudpuppy
+musk ox
+muskrat
+mussels
+mustelids
+nabarlek
+naked mole-rat
+nandu
+narwhal
+nautilus
+newt
+numbat
+nuthatch
+nutria
+nymph
+ocelot
+octopus
+okapi
+onager
+opossum
+orangutan
+orca
+oriole
+oryx
+ostrich
+otter
+owl
+ox
+oxpecker
+oyster
+panda
+pangolin
+panther
+parakeet
+parrot
+peacock
+peafowl
+pelican
+penguin
+petrel
+pig
+pika
+pinniped
+placental
+plankton
+platypus
+plover
+polar bear
+polliwog
+pompano
+porcupine
+porpoise
+primates
+pronghorn
+protozoan
+pufferfish
+puffin
+puma
+pupa
+quagga
+quail
+queen conch
+quetzal
+quokka
+quoll
+rabbit
+raccoon
+rat
+ray
+red kangaroo
+red panda
+reindeer
+reptile
+rhea
+rhino
+rhinoceros
+right whale
+ring-tailed lemur
+ringtail possum
+river otter
+roadrunner
+roach
+robin
+rodent
+rooster
+roundworm
+sailfish
+salamander
+salmon
+sand dollar
+sandpiper
+scallop
+scorpion
+sea anemone
+sea cow
+seal
+sealion
+sea otter
+sea cucumber
+sea star
+sea turtle
+sea urchin
+sea worm
+serval
+sheep
+shrew
+shrimp
+siamang
+silkworm
+silverfish
+skipper
+skunk
+sloth
+snail
+snapper
+sparrow
+spider
+spiny anteater
+sponge
+springtail
+squirrel
+starfish
+starling
+stingray
+stonefly
+stork
+sugar glider
+sunfish
+swallowtail butterfly
+swan
+swift
+swordfish
+tadpole
+tamarin
+tanager
+tapir
+tarantula
+tarpon
+tarsier
+Tasmanian devil
+Tasmanian tiger
+termite
+tern
+three-toed sloth
+thrip
+tick
+tiger
+toad
+tortoise
+toucan
+treefrog
+treeshrew
+tsetse fly
+tuna
+turkey
+turtle
+umbrellabird
+ungulates
+urchin
+vampire bat
+viceroy butterfly
+Virginia opossum
+vulture
+wallaby
+walkingstick
+walrus
+warthog
+wasp
+waterbug
+weasel
+weddell seal
+weevil
+whale
+whale shark
+whelk
+wildebeest
+wolverine
+woodland caribou
+woodpecker
+wolf
+wombat
+worm
+woodcheck
+wren
+xenops
+yak
+yellowjacket
+zebra
+zooplankton
+zorilla
+zorro
+#
+Do you like animals ?
+Which animal is your favourite ?
+I went to a zoo once, it was awesome ?
+Which animal would you want to be ?
+###
+anorak
+apron
+ascot tie
+balaclava
+ball gown
+bandanna
+baseball cap
+bathing suit
+beanie
+bell-bottoms
+belt
+beret
+bib
+bikini
+blazer
+bloomers
+blouse
+boa
+bonnet
+boot
+bow
+bow tie
+boxer shorts
+boxers
+bra
+bracelet
+briefs
+buckle
+button
+button-down shirt
+camisole
+cap
+cap and gown
+cape
+capris
+cardigan
+cloak
+clogs
+coat
+collar
+costume
+cowboy boots
+cowboy hat
+crown
+cuff
+cuff links
+culottes
+diaper
+dinner jacket
+dirndl
+dress
+earmuffs
+earrings
+evening gown
+fashion
+fedora
+fez
+flak jacket
+flannel nightgown
+flannel shirt
+flip-flops
+formal wear
+frock
+fur
+fur coat
+galoshes
+garment
+garters
+glasses
+gloves
+gown
+halter top
+handbag
+handkerchief
+hat
+Hawaiian shirt
+hazmat suit
+helmet
+hem
+high heels
+hoodie
+hook and eye
+hosiery
+hospital gown
+housecoat
+jacket
+jeans
+jewelry
+jumper
+jumpsuit
+kerchief
+khakis
+kilt
+kimono
+lab coat
+lapels
+leather jacket
+leggings
+leotard
+life jacket
+loafers
+longjohns
+miniskirt
+mittens
+moccasins
+muffler
+neckerchief
+necklace
+nightgown
+nightshirt
+outerwear
+overalls
+overcoat
+pajamas
+panama hat
+pants
+pantsuit
+pantyhose
+parka
+pea coat
+petticoat
+pinafore
+pleat
+pocket
+pocketbook
+polo shirt
+poncho
+porkpie hat
+pullover
+pumps
+purse
+raincoat
+ring
+robe
+rugby shirt
+sandals
+sari
+sarong
+scarf
+school uniform
+sheath dress
+shift
+shirt
+shoe
+shorts
+skirt
+slacks
+slip
+slippers
+smock
+snaps
+sneakers
+sock
+spacesuit
+Stetson hat
+stockings
+suit
+sunbonnet
+sundress
+sunglasses
+sun hat
+suspenders
+sweater
+sweats
+swimsuit
+t-shirt
+tam
+tank top
+tiara
+tie
+tie clip
+tights
+toga
+top hat
+train
+trunks
+turtleneck
+tutu
+trench coat
+trousers
+trunks
+tube top
+tunic
+turban
+turtle neck shirt
+tux
+tuxedo
+tweed jacket
+undershirt
+underwear
+uniform
+veil
+Velcro
+vest
+vestments
+visor
+waders
+waistcoat
+wedding gown
+Wellingtons
+wetsuit
+windbreaker
+yoke
+zipper
+zoris
+#
+Is it cold where you live ?
+Do you like shirts ?
+I lost my cap yesterday... Haven't you seen it ?
+What are you wearing ?

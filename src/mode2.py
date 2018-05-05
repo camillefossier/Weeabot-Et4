@@ -125,7 +125,7 @@ def questionFinder(sent):
             i+=1
             for words in theme[0]:
                 
-                if word == words : 
+                if word.lower() == words.lower() : 
                     if len(theme[1])==0:
                         #print(constVocab[i][1])
                         theme[1] = copy.deepcopy(constVocab[i][1])

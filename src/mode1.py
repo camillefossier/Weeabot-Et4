@@ -1,4 +1,5 @@
 import random
+import functions as f
 
 vocab = []
 
@@ -26,6 +27,8 @@ def run():
         last = getRandomWord(last)
         if inp == 'exit':
             over = True
-            print('Bot: Bye !')
+            print('Bot: ', end='')
+            f.type('Bye !')
         else:
-            print('Bot: '+last)
+            print('Bot: ', end='')
+            f.type(last)
