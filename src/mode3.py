@@ -24,8 +24,6 @@ def in_manga_list(m, arr, g):
 			1
 	return False
 
-#TODO
-
 def new_proposition(m, g):
 	global proposed_mangas
 	for prop in proposed_mangas:
@@ -451,7 +449,7 @@ def find_manga(crit, sorted_manga):
 	if crit is not None:
 		nb_crit = len(crit)
 		if nb_crit==0:
-			return "There is no manga with this genres"
+			return "There is no manga with these genres"
 		for manga in sorted_manga:
 			#print("here")
 			flag=True
