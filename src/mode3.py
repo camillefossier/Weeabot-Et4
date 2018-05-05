@@ -427,6 +427,8 @@ def determine_most(sent, arr):
                 scores.append(sc)
         i = f.max_index(scores, last_theme)
         last_theme = i
+        if random.randint(0,2)==0:
+             last_theme=9
         return i
 
 def determine_act(sent, arr):
