@@ -551,7 +551,10 @@ def run():
 	while(True):
 		sentence = input("You: ")
 		sent = f.tokenise_en(sentence)
-		
+		if sentence=='exit':
+			print('Bot: ', end='')
+			f.type('Bye !')
+			break
 		th = determine_most(sent, vocabSubject)
 		update_manga(sent, sorted_manga)
 		action = determine_act(sent, actionToDo)
