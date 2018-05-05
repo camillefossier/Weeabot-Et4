@@ -331,18 +331,18 @@ def get_formulation(nb, manga, pronoun=True):
 	elif nb == 6:
 		return f.upper(noun)+" was written on "+str(manga.datePublication)
 	elif nb == 7:
-		return +f.arr_to_str(manga.authors)+" wrote "+noun
+		return f.arr_to_str(manga.authors)+" wrote "+str(noun)
 	elif nb == 8:
 		return f.arr_to_str(f.get_random_elements(manga.characters,2,4),',')+" are characters of "+manga.title
 	else:
-		if random.randint(0,2)>=1:
-			return m2.answer(sentence, "")
+		if random.randint(0,1)==0:
+			m2.answer(sentence, "")
 		else:
 			return get_formulation(random.randint(0,8), manga)
 
 def give_info(nb):
         if curr1 == None:
-            if random.randint(0,2)==0:
+            if random.randint(0,1)==0:
                 return 'What manga are you talking about ?'
             else:
                 return m2.answer(sentence, "")
