@@ -2,6 +2,7 @@ import requests
 import pickle
 import functions as f
 import random
+import mode2 as m2
 
 class Manga(dict):
 
@@ -34,6 +35,8 @@ class Manga(dict):
 		print("les personnages sont: -------")
 		for c in self.characters:
 			print(c)
+
+sentence = ""
 
 sorted_manga = []
 list_genre = []
@@ -275,7 +278,10 @@ def act(nb, ac, question=False, crit=None):
 				res = "I agree with you, " if question==False else ""
 				return res+dislike_manga()
 	except:
-		return "That is not very clear..."
+		if random.randint(0,2)==0:
+			return "That is not very clear..."
+		else:
+			return m2.answer(sentence, "")
   
 # Only returns the data of a manga by its number of subject
 def get_subject(nb, manga):
@@ -311,9 +317,9 @@ def get_formulation(nb, manga, pronoun=True):
 	if nb == -1:
 		return "Yeah what about "+str(get_subject(0, manga))+" ?"
 	elif nb == 0:
-		return noun+" is called "+str(get_subject(nb, manga))+" of course"
+		return f.upper(noun)+" is called "+str(get_subject(nb, manga))+" of course"
 	elif nb == 1:
-		return noun+"'s rank is "+str(get_subject(nb, manga))
+		return f.upper(noun)+"'s rank is "+str(get_subject(nb, manga))
 	elif nb == 2:
 		return f.arr_to_str(f.get_random_elements(manga.genres, 2, 4),",")+" are some of the genres of "+noun
 	elif nb == 3:
@@ -325,15 +331,21 @@ def get_formulation(nb, manga, pronoun=True):
 	elif nb == 6:
 		return f.upper(noun)+" was written on "+str(manga.datePublication)
 	elif nb == 7:
-		return "the author of "+noun+" is "+f.arr_to_str(manga.authors)
+		return +f.arr_to_str(manga.authors)+" wrote "+noun
 	elif nb == 8:
-		return f.arr_to_str(f.get_random_elements(manga.characters,1,4),',')+" are characters of "+manga.title
+		return f.arr_to_str(f.get_random_elements(manga.characters,2,4),',')+" are characters of "+manga.title
 	else:
-		return get_formulation(random.randint(0,8), manga)
+		if random.randint(0,2)>=1:
+			return m2.answer(sentence, "")
+		else:
+			return get_formulation(random.randint(0,8), manga)
 
 def give_info(nb):
         if curr1 == None:
+            if random.randint(0,2)==0:
                 return 'What manga are you talking about ?'
+            else:
+                return m2.answer(sentence, "")
         else:
                 return get_formulation(nb, curr1)
 
@@ -507,6 +519,8 @@ def run():
 	global sorted_manga
 	global list_genre
 	global proposed_mangas
+	global sentence
+
 	listemangafini = []
 	listemangafini = pickle.load(file)
 	sorted_manga = order_by_rank(listemangafini)
@@ -535,7 +549,9 @@ def run():
 	avg_char = calc_avg(8)
 	
 	while(True):
-		sent = f.tokenise_en(input("You: "))
+		sentence = input("You: ")
+		sent = f.tokenise_en(sentence)
+		
 		th = determine_most(sent, vocabSubject)
 		update_manga(sent, sorted_manga)
 		action = determine_act(sent, actionToDo)
