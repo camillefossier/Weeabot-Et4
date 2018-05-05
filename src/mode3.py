@@ -327,7 +327,10 @@ def get_formulation(nb, manga, pronoun=True):
 	elif nb == 4:
 		return f.upper(noun)+" is rated "+str(manga.score)+"/10"
 	elif nb == 5:
-		return f.upper(noun)+" has "+str(manga.nb_chapters)+" chapters"
+		if manga.nb_chapters==None:
+			return f.upper(noun)+" is not finished yet"
+		else:
+			return f.upper(noun)+" has "+str(manga.nb_chapters)+" chapters"
 	elif nb == 6:
 		return f.upper(noun)+" was written on "+str(manga.datePublication)
 	elif nb == 7:
