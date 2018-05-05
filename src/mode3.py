@@ -13,6 +13,23 @@ curr1 = None
 curr2 = None
 last_theme=9
 
+def new_current(m):
+		global curr1
+		global curr2
+		try:
+			curr2 = curr1
+			curr1 = m
+		except:
+			1
+
+def new_currents(m1, m2):
+		global curr1
+		global curr2
+		try:
+			curr1 = m1
+			curr2 = m2
+		except:
+			1
 
 # TODO: Faire comme pour le mode 2
 # Un fichier qui contient les mots à détecter et des formulations pour répondre
@@ -30,10 +47,10 @@ vocabSubject = [
 
 actionToDo = [
         [], # info about the current one
-        ['are', 'compare', 'between', 'and', 'two'], # compare curr1 and curr2 on a criteria
+        ['both', 'compare', 'between', 'and', 'two'], # compare curr1 and curr2 on a criteria
         ['the', 'best', 'highest', 'biggest', 'all', 'first'], # give the best on one criteria
         ['the', 'worst', 'all', 'last'], # and the worst
-        ['which', 'manga', 'can', 'suggest', 'and'] # find a manga with a particularity
+        ['give', 'which', 'manga', 'can', 'suggest', 'and'] # find a manga with a particularity
         ]
 
 def act(nb, ac, crit=None, second=0):
@@ -44,7 +61,7 @@ def act(nb, ac, crit=None, second=0):
         elif ac==2:
                 return highest(nb, sorted_manga)
         elif ac==4:
-        		return find_manga(crit, sorted_manga, second)
+        	return find_manga(crit, sorted_manga, second)
   
 
 class Manga(dict):
@@ -139,6 +156,7 @@ def highest(nb, mlist):
                                 manga = m
                 except:
                         1
+        new_current(manga)
         return str(manga.title)+" : "+str(get_subject(nb, manga))
                         
                 
@@ -198,7 +216,7 @@ def determine_act(sent, arr):
                 scores.append(sc)
         i = f.max_index(scores, 0)
         return i
-        
+
 def update_manga(sent, mlist):
         global curr1
         global curr2
@@ -206,8 +224,7 @@ def update_manga(sent, mlist):
         for m in mlist:
                 titl=f.tokenise_en(m.title)
                 if m.title != curr1 and f.contains_arr(sent, titl) >= 0.6:
-                    curr2 = curr1
-                    curr1 = m
+                    new_current(m)
                     break
                     # EUH attention aux histoires de copies là c ptet du pointeur
 
@@ -216,7 +233,7 @@ def determine_genre(sent):
 	genres = []
 	for w in sent:
 		for genre in list_genre:
-			if w == genre:
+			if w.lower() == genre.lower():
 				genres.append(genre)
 	return genres
 
@@ -227,15 +244,17 @@ def find_manga(crit, sorted_manga, second):
 		if nb_crit==0:
 			return "There is no manga with this genres"
 		for manga in sorted_manga:
-			print("here")
+			#print("here")
 			if set(crit).issubset(manga.genres):
 				if second==0:
+					new_current(manga)
 					return "It's a perfect match with " + manga.title
 				if second==1:
 					second -= 1
 					continue	
 			for genre in manga.genres:
 				if genre in crit:
+					new_current(manga)
 					return "It's match partly with " + manga.title
 	return "no match"
 

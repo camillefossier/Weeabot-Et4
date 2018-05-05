@@ -8,8 +8,12 @@ def contains_arr(a, b):
     sc = 0
     for i in a:
         for j in b:
-            if i==j:
-                sc+=1
+            try:
+                if i.lower()==j.lower():
+                    sc+=1
+            except:
+                if i==j:
+                    sc+=1
     return sc/len(b)
 
 def max_index(arr, r=0):
