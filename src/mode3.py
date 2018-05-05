@@ -5,240 +5,6 @@ import pickle
 import functions as f
 import random
 
-sorted_manga = []
-list_genre = []
-
-proposed_mangas = [] # list of mangas proposed by the weeabot
-proposed_mangas = [] # list of mangas proposed by the weeabot
-
-def in_manga_list(m, arr, g):
-	#print(str(arr))
-	for a in arr:
-		try:
-			#print(a[0].lower())
-			if a[0].lower()==g.lower():
-				for i in a[1]:
-					if m.lower()==i.lower():
-						return True
-		except:
-			1
-	return False
-
-def new_proposition(m, g):
-	global proposed_mangas
-	for prop in proposed_mangas:
-		try:
-			if prop[0].lower()==g.lower():
-				prop[1].append(m.title)
-				break
-		except:
-			1
-
-def is_question(sent):
-	nb=0
-	arr=['why', 'you', '?']
-	for i in sent:
-		if i in arr:
-			nb+=1
-	if nb>=2:
-		return True
-	else:
-		return False
-
-def new_propositions(m, cr):
-	global proposed_mangas
-	for g in cr:
-		for prop in proposed_mangas:
-			try:
-				if prop[0].lower()==g.lower():
-					prop[1].append(m.title)
-					break
-			except:
-				1
-
-curr1 = None
-curr2 = None
-last_theme=9
-
-# Data related to the database
-avg_mark = []
-avg_chap = []
-avg_fav = []
-avg_year = []
-avg_char = []
-
-def calc_avg(n):
-	mark = 0
-	nb = 0
-	for m in sorted_manga:
-		try:
-			if n==8:
-				val=len(get_subject(n, m))
-			elif n==6:
-				val=float(get_subject(n, m).year)
-			else:
-				val=float(get_subject(n, m))
-			#print(get_subject(n, m))
-			mark+=val
-			nb+=1
-			try:
-				if val<min:
-					min=val
-			except (NameError):
-				min=val
-			try:
-				if val>max:
-					max=val
-			except (NameError):
-				max=val
-
-		except:
-			1
-	try:
-		return [min, mark/nb, max]
-	except:
-		return None
-
-def new_current(m):
-		global curr1
-		global curr2
-		try:
-			curr2 = curr1
-			curr1 = m
-		except:
-			1
-
-def new_currents(m1, m2):
-		global curr1
-		global curr2
-		try:
-			curr1 = m1
-			curr2 = m2
-		except:
-			1
-
-# TODO: Faire comme pour le mode 2
-# Un fichier qui contient les mots à détecter et des formulations pour répondre
-vocabSubject = [
-        ['title', 'name', 'called'],
-        ['rank', 'ranked', 'best'],
-        ['genre', 'type'],
-        ['favorites'],
-        ['rated', 'score', 'mark', 'marks', 'good', 'bad'],
-        ['number', 'chapters', 'long', 'short', 'finished', 'over'],
-        ['when', 'recent', 'published', 'date'],
-        ['author', 'wrote', 'written', 'created'],
-        ['characters', 'character']
-        ]
-
-# TODO : En realité ici il faudrait qu'il puisse savoir quand on dit oldest ou most recent :/ osef
-actionToDo = [
-        [], # info about the current one
-        ['are', 'both', 'compare', 'between', 'and', 'two'], # compare curr1 and curr2 on a criteria
-        ['best', 'highest', 'biggest', 'all', 'first', 'most'], # give the best on one criteria
-        ['worst', 'all', 'last', 'least'], # and the worst
-        ['give', 'manga', 'suggest', 'and'], # find a manga with a particularity
-        ['like', 'love', 'enjoy', 'favorite', 'favourite', 'prefer'],
-		['not', 'like', 'dislike', 'hate']
-        ]
-
-def evaluate(m):
-	subject=[5,3,6,8]
-	norm=[
-		normalize(m.nb_chapters, avg_chap),
-		normalize(m.nb_favorites, avg_fav),
-		normalize(m.datePublication, avg_year),
-		normalize(len(m.characters), avg_char)
-	]
-	c = 0
-	for i in range(1, 3):
-		if abs(norm[i])>abs(norm[c]):
-			c=i
-	return subject[c], norm[c]
-
-# returns a value between 0 and 1 to indicate position of a value inside of a set
-def normalize(val, arr):
-	try:
-		return (val-arr[1])/(arr[2]-arr[0])
-	except:
-		return 0
-
-def like_manga():
-	sub, val = evaluate(curr1)
-	return "I like "+curr1.title+" "+describe(sub, val)
-
-def dislike_manga():
-	sub, val = evaluate(curr1)
-	return "I hate "+curr1.title+" "+describe(sub, val)
-
-#TODO : S'il n'a pas de chapitres dire il n'est pas fini	
-
-# TODO : Plutot que de dire : il a beaucoup de chapitres, dire : il en a tant
-# donc rajouter en paramètre le manga dont on parle
-def describe(sub, val):
-	if (random.randint(0,10) >= 4):
-		if sub==5:
-			if val>0:
-				return "because it has a lot of chapters"
-			else:
-				return "because it is quite short"
-		elif sub==3:
-			if val>0:
-				return ", a lot of people like this manga"
-			else:
-				return ", very few people like it"
-		elif sub==6:
-			if val>0:
-				return "because it is recent"
-			else:
-				return "because it is quite old"
-		elif sub==8:
-			if val>0:
-				return "because it has a lot of characters"
-			else:
-				return "because it has very few characters"
-	else:
-		a = random.randint(0,3)
-		if a==0:
-			return "because I like its title" # + TODO : TITLE
-		elif a==1:
-			return "because I like the author" # + AUTHOR
-		elif a==2:
-			return "because I like its genre" # + RANDOM GENRE
-		else:
-			return "because I like the characters" # + RANDOM CHARACTER(S)
-		
-
-def act(nb, ac, question=False, crit=None):
-	#try:
-		if ac==0:
-			return give_info(nb)
-		elif ac==1:
-			return compare(nb)
-		elif ac==2:
-			return highest(nb, sorted_manga)
-		elif ac==3:
-			return highest(nb, sorted_manga, -1)
-		elif ac==4:
-			return find_manga(crit, sorted_manga)
-		elif ac==5:
-			if curr1.score >= avg_mark[1]:
-				res = "I agree with you, " if question==False else ""
-				return res+like_manga()
-			else:
-				res = "I disagree with you, " if question==False else ""
-				return res+dislike_manga()
-		elif ac==6:
-			if curr1.score >= avg_mark[1]:
-				res = "I disagree with you, " if question==False else ""
-				return res+like_manga()
-			else:
-				res = "I agree with you, " if question==False else ""
-				return res+dislike_manga()
-	#except:
-	#	return "That is not very clear..."
-  
-
 class Manga(dict):
 
 	def __init__(self, title = None, rank = None, genres = None, nb_favorites = None, 
@@ -270,9 +36,247 @@ class Manga(dict):
 		print("les personnages sont: -------")
 		for c in self.characters:
 			print(c)
-		
 
-# Only returns the data
+sorted_manga = []
+list_genre = []
+
+proposed_mangas = [] # list of mangas proposed by the weeabot
+proposed_mangas = [] # list of mangas proposed by the weeabot
+
+curr1 = None
+curr2 = None
+last_theme=9
+
+# Data related to the database
+avg_mark = []
+avg_chap = []
+avg_fav = []
+avg_year = []
+avg_char = []
+
+vocabSubject = [
+        ['title', 'name', 'called'],
+        ['rank', 'ranked', 'best'],
+        ['genre', 'type'],
+        ['favorites'],
+        ['rated', 'score', 'mark', 'marks', 'good', 'bad'],
+        ['number', 'chapters', 'long', 'short', 'finished', 'over'],
+        ['when', 'recent', 'published', 'date'],
+        ['author', 'wrote', 'written', 'created'],
+        ['characters', 'character']
+        ]
+
+actionToDo = [
+        [], # info about the current one
+        ['are', 'both', 'compare', 'between', 'and', 'two'], # compare curr1 and curr2 on a criteria
+        ['best', 'highest', 'biggest', 'all', 'first', 'most'], # give the best on one criteria
+        ['worst', 'all', 'last', 'least'], # and the worst
+        ['give', 'manga', 'suggest', 'and'], # find a manga with a particularity
+        ['like', 'love', 'enjoy', 'favorite', 'favourite', 'prefer'],
+		['not', 'like', 'dislike', 'hate']
+        ]
+
+# has a manga already been proposed by the bot
+def in_manga_list(m, arr, g):
+	for a in arr:
+		try:
+			if a[0].lower()==g.lower():
+				for i in a[1]:
+					if m.lower()==i.lower():
+						return True
+		except:
+			1
+	return False
+
+# adds a proposed manga to the list of already proposed ones
+def new_proposition(m, g):
+	global proposed_mangas
+	for prop in proposed_mangas:
+		try:
+			if prop[0].lower()==g.lower():
+				prop[1].append(m.title)
+				break
+		except:
+			1
+
+# is the sentence a question
+def is_question(sent):
+	nb=0
+	arr=['why', 'you', '?']
+	for i in sent:
+		if i in arr:
+			nb+=1
+	if nb>=2:
+		return True
+	else:
+		return False
+
+# adds a proposed manga to the list of already proposed ones (several genres)
+def new_propositions(m, cr):
+	global proposed_mangas
+	for g in cr:
+		for prop in proposed_mangas:
+			try:
+				if prop[0].lower()==g.lower():
+					prop[1].append(m.title)
+					break
+			except:
+				1
+
+# calculates the average number for a given parameter
+def calc_avg(n):
+	mark = 0
+	nb = 0
+	for m in sorted_manga:
+		try:
+			if n==8:
+				val=len(get_subject(n, m))
+			elif n==6:
+				val=float(get_subject(n, m).year)
+			else:
+				val=float(get_subject(n, m))
+			mark+=val
+			nb+=1
+			try:
+				if val<min:
+					min=val
+			except (NameError):
+				min=val
+			try:
+				if val>max:
+					max=val
+			except (NameError):
+				max=val
+
+		except:
+			1
+	try:
+		return [min, mark/nb, max]
+	except:
+		return None
+
+# updates the current manga stored in memory (global variable)
+def new_current(m):
+		global curr1
+		global curr2
+		try:
+			curr2 = curr1
+			curr1 = m
+		except:
+			1
+
+# updates both of the current mangas
+def new_currents(m1, m2):
+		global curr1
+		global curr2
+		try:
+			curr1 = m1
+			curr2 = m2
+		except:
+			1
+
+# tells by which criteria a certain manga is different from the average (how is it original ?)
+def evaluate(m):
+	subject=[5,3,6,8]
+	norm=[
+		normalize(m.nb_chapters, avg_chap),
+		normalize(m.nb_favorites, avg_fav),
+		normalize(m.datePublication, avg_year),
+		normalize(len(m.characters), avg_char)
+	]
+	c = 0
+	for i in range(1, 3):
+		if abs(norm[i])>abs(norm[c]):
+			c=i
+	if random.randint(0,4) >=3:
+		c=random.randint(0,3)
+	return subject[c], norm[c]
+
+# returns a value between 0 and 1 to indicate how far of the average is another value inside of a set
+def normalize(val, arr):
+	try:
+		return (val-arr[1])/(arr[2]-arr[0])
+	except:
+		return 0
+
+
+# RETURN SENTENCES
+
+
+def like_manga():
+	sub, val = evaluate(curr1)
+	return "I like "+curr1.title+" "+describe(sub, val, curr1)
+
+def dislike_manga():
+	sub, val = evaluate(curr1)
+	return "I hate "+curr1.title+" "+describe(sub, val, curr1)
+
+def describe(sub, val, manga):
+	if (random.randint(0,10) >= 4):
+		if sub==5:
+			if val>0:
+				return "because it has "+str(manga.nb_chapters)+" chapters, which is a lot"
+			else:
+				return "because it is quite short with its "+str(manga.nb_chapters)+" chapters"
+		elif sub==3:
+			if val>0:
+				return ", a lot of people like this manga"
+			else:
+				return ", very few people like it"
+		elif sub==6:
+			if val>0:
+				return "because it is from "+str(manga.datePublication.year)+" so it is recent"
+			else:
+				return "because it is quite old, since it was written in "+str(manga.datePublication.year)
+		elif sub==8:
+			if val>0:
+				return "because it has about "+str(len(manga.characters))+" characters"
+			else:
+				return "because it has very few characters, about "+str(len(manga.characters))
+		else:
+			1
+	else:
+		a = random.randint(0,3)
+		if a==0:
+			return "because I like its title"
+		elif a==1:
+			return "because I like the author "+f.arr_to_str(manga.authors)
+		elif a==2:
+			return "because I like the genre "+f.arr_to_str(f.get_random_elements(manga.genres,1,1))
+		else:
+			return "because I like the characters "+f.arr_to_str(f.get_random_elements(manga.characters, 2, 3))
+		
+# determines wether it must compare or give information...
+def act(nb, ac, question=False, crit=None):
+	try:
+		if ac==0:
+			return give_info(nb)
+		elif ac==1:
+			return compare(nb)
+		elif ac==2:
+			return highest(nb, sorted_manga)
+		elif ac==3:
+			return highest(nb, sorted_manga, -1)
+		elif ac==4:
+			return find_manga(crit, sorted_manga)
+		elif ac==5:
+			if curr1.score >= avg_mark[1]:
+				res = "I agree with you, " if question==False else ""
+				return res+like_manga()
+			else:
+				res = "I disagree with you, " if question==False else ""
+				return res+dislike_manga()
+		elif ac==6:
+			if curr1.score >= avg_mark[1]:
+				res = "I disagree with you, " if question==False else ""
+				return res+like_manga()
+			else:
+				res = "I agree with you, " if question==False else ""
+				return res+dislike_manga()
+	except:
+		return "That is not very clear..."
+  
+# Only returns the data of a manga by its number of subject
 def get_subject(nb, manga):
         if nb == -1:
                 return "Yeah what about it ?"
@@ -297,6 +301,7 @@ def get_subject(nb, manga):
         else:
                 return get_subject(random.randint(0,8), manga)
 
+# gives information with a proper formulation
 def get_formulation(nb, manga, pronoun=True):
 	noun = manga.title
 	if pronoun:
@@ -323,12 +328,10 @@ def get_formulation(nb, manga, pronoun=True):
 	elif nb == 8:
 		return f.arr_to_str(f.get_random_elements(manga.characters,1,4),',')+" are characters of "+manga.title
 	else:
-		#print(nb)
 		return get_formulation(random.randint(0,8), manga)
 
 def give_info(nb):
         if curr1 == None:
-            	#print("Bot: ",end='')
                 return 'What manga are you talking about ?'
         else:
                 return get_formulation(nb, curr1)
@@ -425,6 +428,7 @@ def determine_act(sent, arr):
         i = f.max_index(scores, 0)
         return i
 
+# detects manga name in a sentence
 def update_manga(sent, mlist):
         global curr1
         global curr2
@@ -435,6 +439,7 @@ def update_manga(sent, mlist):
                 if m.title != curr1 and f.contains_arr(sent, titl) >= 0.6:
                     new_current(m)
 
+# detects manga gere in a sentence
 def determine_genre(sent):
 	global list_genre
 	genres = []
@@ -444,6 +449,7 @@ def determine_genre(sent):
 				genres.append(genre)
 	return genres
 
+# find manga corresponding to a set of genres
 def find_manga(crit, sorted_manga):
 	global proposed_mangas
 	if crit is not None:
@@ -451,20 +457,16 @@ def find_manga(crit, sorted_manga):
 		if nb_crit==0:
 			return "There is no manga with these genres"
 		for manga in sorted_manga:
-			#print("here")
 			flag=True
 			for c in crit:
 				if in_manga_list(manga.title,proposed_mangas,c):
 					flag=False
 					break
 			if set(crit).issubset(manga.genres) and flag:
-				#if second==0:
 				new_propositions(manga, crit)
 				new_current(manga)
 				return "This matches perfectly with " + manga.title
-				#if second==1:
-				#	second -= 1
-				#	continue
+
 		for manga in sorted_manga:	
 			for genre in manga.genres:
 				if genre in crit and in_manga_list(manga.title,proposed_mangas, genre)==False:
@@ -500,6 +502,7 @@ def run():
 
 	pickle.dump(manga_list, file)
 	print("ajout manga---")'''
+	
 	global sorted_manga
 	global list_genre
 	global proposed_mangas
@@ -515,16 +518,7 @@ def run():
 				newGenre.append(genres)
 				newGenre.append([])
 				proposed_mangas.append(newGenre)
-	#print(list_genre)
-	#for manga in sorted_manga:
-		#nbmanga = nbmanga + 1
-		#manga.informations()
-		#print("~~~~~~~~~~")
-		#print("")
-		#print(nbmanga)
-		#i = 0
-	#for i in range (0, 100):
-		#print(sorted_manga[i].title, sorted_manga[i].rank)
+
 	new = 0
 	
 	global avg_mark
@@ -550,7 +544,6 @@ def run():
 			g = determine_genre(sent)
 			f.type(str(act(th, action, is_question(sent), g)))
 		else:
-        #f.type(str(get_subject(th, curr1)))
 			f.type(str(act(th, action, is_question(sent))))
 		# TODO : Avec une certaine proba appeler le mode 2 ?
 
