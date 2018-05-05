@@ -5,6 +5,8 @@ import mode1 as m1
 import copy
 import functions as f
 
+imported = 0
+
 vocab = []
 constVocab = []
 
@@ -59,6 +61,7 @@ def parseVocab(vocab_file):
     constVocab = copy.deepcopy(theme)
 
 def run():
+    global imported
     vocab_file = "../vocab/vocab.txt"
     irregular_file = '../vocab/irregular.txt'
     parseVocab(vocab_file)
@@ -68,6 +71,7 @@ def run():
     over = False
     last = ""
     lastInp = ""
+    imported = 1
     while(not over):
         inp = input('You: ')
         if inp == 'exit':
@@ -95,7 +99,17 @@ def readDejaVu(inp, last):
         
 
 def answer(sentence, last):
-
+    global imported
+    if imported==0:
+        vocab_file = "../vocab/vocab.txt"
+        irregular_file = '../vocab/irregular.txt'
+        parseVocab(vocab_file)
+        parseIrregular(irregular_file)
+        parseRegular("../vocab/regular.txt")
+        last = 'NIL'
+        over = False
+        last = ""
+        lastInp = ""
     sent = f.tokenise_en(sentence)
     useMode1 = False
     ans = questionFinder(sent)
