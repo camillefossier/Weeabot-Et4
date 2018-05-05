@@ -9,7 +9,6 @@ def parseVocab(vocab_file):
     for v in file:
         if len(v) > 1:
             vocab.append(v[:-1])
-    #print(vocab)
 
 def getRandomWord(last):
     if len(vocab)==0:

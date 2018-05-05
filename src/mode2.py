@@ -23,8 +23,6 @@ regular = []
 dejaVu = ['I have a feeling of déjà vu', "Haven't you already said that ?", "Stop saying the same thing over and over !", 'You parrot !', 'Morgan would hate the way you keep repeating yourself !', "You know what, I'll pretend this is normal..."]
 dejaVuCursor = -1
 
-#TODO: Faire une fonction universelle de parsing qui prend en parametre le tableau de sortie ? possible avec des variables globales ? peut etre
-
 def parseIrregular(irregular_file):
     global irregular
     file = open(irregular_file, 'r')
@@ -36,7 +34,6 @@ def parseRegular(regular_file):
     file = open(regular_file, 'r')
     for v in file:
         regular.append(v[:-1])
-    #print(regular)
         
 def parseVocab(vocab_file):
     global vocab
@@ -98,9 +95,7 @@ def readDejaVu(inp, last):
         
 
 def answer(sentence, last):
-    # TODO : Peut etre faire un truc comme quoi si il detecte deux trucs genre "Je suis X" et le mot "father"
-    # il decide de manière aléatoire s'il va parler de l'un ou l'autre
-    # RANDOM IS KEY TO A GREAT DISCUSSION !
+
     sent = f.tokenise_en(sentence)
     useMode1 = False
     ans = questionFinder(sent)
@@ -158,6 +153,7 @@ def findBe(sent):
             w+=1
     return False
 
+# finds a verb and returns the correct answer with adapted tense
 def findVerb(sent):
     w=0
     while w < len(sent):
@@ -174,8 +170,7 @@ def findVerb(sent):
         w+=1
     return False
 
-# TODO: Cette fonction accepte que le mec dise n'importe quoi genre 'I would needed'
-# Il faudrait qu'on lui dise : ca veut rien dire
+# determines the tense of a sentence
 def findTense(sent, w):
     word = sent[w]
     tense = False
@@ -192,9 +187,7 @@ def findTense(sent, w):
         else:
             break
     if tense == False:
-        #print("not irregular")
         for v in regular:
-            #print(v)
             if word==v:
                 return 'do you '+v
             elif word[len(word)-1]=='d' and word[len(word)-2]=='e' and (word[:-1]==v or word[:-2]==v):
@@ -205,6 +198,8 @@ def findTense(sent, w):
                 return 'would you'
     return False
 
+# when addressing directly to the bot, the bot has to change the order
+# you becomes I, etc.
 def translate(word):
     for w in translations:
         if w[0]==word:
@@ -218,35 +213,3 @@ def findCOD(sent, w):
     for i in range(w, len(sent)):
         ans+=' '+translate(sent[i])
     return ans
-
-
-
-# chatbot psychologue Eliza
-
-# — Quand l’utilisateur dit " Je suis X ", répondre qqchose comme "Pourquoi est-ce que tu es X ? "
-# Pensez à implémenter cela pour tous les temps du verbe "être" 
-
-# — Identifiez quelques mots-clés ( "famille" , "parents" . . .) qui correspondent à des sujets de dis-
-# cussion avec un psychologue (l’enfance en famille). Lorsque l’un de ces mots-clés est employé par
-# l’utilisateur, le chatbot répondra par une question liée à ce sujet. Par exemple, si l’utilisateur écrit
-# " On allait souvent en vacances avec mes parents. " , le chatbot pourra répondre " Est-ce que 1vous pensez que la famille est importante ? " .
-
-# Définissez au moins 10 mots clés associés à au
-# moins 5 sujets de discussion, et rédigez au moins 2 réponses possibles pour chaque sujet, parmi
-# lesquelles le chabot effectuera un choix aléatoire, sans répéter le choix précédent le cas échéant
-# (comme pour les backchannels du mode 1).
-
-
-
-
-
-# fichier à parser :
-#       vocabulaire
-#       questions associées
-#       quand on parse on remplit 2 tableaux, un qui ne bougera plus, et un qui se videra quand on dira une question
-#       des que le deuxième est vide on le refill avec le premier
-#       plusieurs thèmes possibles : donc un ensemble de themes dans un dossier
-#       dans le code cela donnera 
-#       comment chercher dans le vocabulaire ? est-ce qu'on fait du most recent used en premier ? parce qu'une discussion reste dans un meme theme
-#       donc si on parle de famille, qu'il aille pas a chaque fois rechecker le vocabulaire de la nourriture en premier
-#       au final, il nous faut un tableau de themes, chaque case est un tableau a deux dimensions : vocabulaire et questions possibles

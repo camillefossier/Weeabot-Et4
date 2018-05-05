@@ -1,7 +1,5 @@
 import requests
 import pickle
-#import myanimelist.manga
-#import myanimelist.session as mals
 import functions as f
 import random
 
@@ -43,17 +41,19 @@ list_genre = []
 proposed_mangas = [] # list of mangas proposed by the weeabot
 proposed_mangas = [] # list of mangas proposed by the weeabot
 
-curr1 = None
-curr2 = None
-last_theme=9
+# so that the user doesn't have to always re-type the manga
+curr1 = None # current manga in memory
+curr2 = None # second current
+last_theme=9 # subject of discussion (author, genre, etc.)
 
-# Data related to the database
+# Data related to the database for comparisons
 avg_mark = []
 avg_chap = []
 avg_fav = []
 avg_year = []
 avg_char = []
 
+# vocabulary to detect a subject of discussion
 vocabSubject = [
         ['title', 'name', 'called'],
         ['rank', 'ranked', 'best'],
@@ -66,6 +66,7 @@ vocabSubject = [
         ['characters', 'character']
         ]
 
+# vocabulary to detect an action
 actionToDo = [
         [], # info about the current one
         ['are', 'both', 'compare', 'between', 'and', 'two'], # compare curr1 and curr2 on a criteria
