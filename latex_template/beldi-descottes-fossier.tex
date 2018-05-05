@@ -133,6 +133,38 @@ Il a été décidé que le Weeabot parlerait anglais étant donné que c'est une
 
 \section{Fonctionnement du Weeabot}
 
+
+
+\subsection{Capacités du Weeabot}
+Le Weeabot possède 3 modes, le mode 1 étant le plus simple et le 3 le plus avancé. Nous avons aussi simulé le fait qu'une personne réelle soit en train de nous répondre en tapant sur son clavier à l'aide d'intervalles aléatoires.\\
+
+\begin{itemize}
+\item[$\bullet$] \textbf{Mode 1 :} Ce mode correspond à celui décrit dans l'énoncé, il répond seulement des onomatopées ou acquiesce à ce que l'utilisateur dit, sans y prêter attention.\\ Il fait cependant attention à ne pas utiliser la même onomatopée ou le même mot à la suite.\\
+\item[$\bullet$] \textbf{Mode 2 :} Dans ce mode il existe une meilleure interaction entre l'utilisateur et le Weeabot, celui ci possède un panel de phrases prédéfinies correspondant à plusieurs thèmes. Il va piocher aléatoirement dans ses réponses possibles en prenant garde à ne pas choisir la même phrase deux fois de suite pour le même thème. \\
+Nous avons essayé de faire en sorte qu'il ait certaines réactions en fonction du comportement de l'utilisateur, par exemple si l'utilisateur répète plusieurs fois de suite la même phrase, il lui fera remarquer.\\
+\item[$\bullet$] \textbf{Mode 3 :} C'est dans ce mode que le Weeabot révèle son côté Weeaboo en parlant essentiellement de mangas. À l'aide de sa base de données qui contient plusieurs centaines de mangas et leurs informations provenant de \url{https://myanimelist.net/}, il peut nous renseigner sur le classement du manga sur ce site, son genre, le nombre de personnes l'ayant en favori, la note que lui ont mis les utilisateurs du site, son nombre de chapitres, sa date de publication, son ou ses auteurs et enfin ses personnages. \\
+Nous pouvons demander plusieurs informations à la suite sur le même manga grâce au fait qu'il garde toujours le dernier manga en mémoire. Ainsi nous avons la possibilité de comparer des mangas de demander le rang de l'un et de dire \texttt{what about [other manga title]?} afin que l'on nous donne l'information pour l'autre manga. \\
+Il est aussi possible de donner son avis sur un manga en disant si on l'aime ou non, et le Weeabot nous donnera son avis sur ce manga en fonction de critères se basant sur la popularité et la moyenne des mangas de sa base de données. \\
+Par exemple si nous lui disons \texttt{I like Naruto}, il nous répondra qu'il est d'accord avec nous en nous donnant un critère aléatoire qu'il aime bien (\textit{sa longueur, son rang, sa popularité...}).\\
+Si nous voulons lire un type de manga en particulier nous pouvons demander conseil au Weeabot et il choisira le manga le mieux classé correspondant au genre que nous lui avons demandé. \\
+Bien sûr nous pouvons demander un manga correspondant à plusieurs genres et s'il n'en trouve aucun dans sa liste, il nous le fera savoir. Par exemple nous pouvons lui dire \texttt{give me a manga with adventure genre} et il nous donnera le titre d'un manga par contre, si nous lui disons \texttt{give me a manga with adventure and action genre} il nous donnera le titre d'un autre manga.\\
+Bien sûr s'il ne trouve aucune réponse possible il essaye de répondre en utilisant le mode 2 et si il ne trouve rien à dire il utilise une réponse du mode 1.\\
+\end{itemize}
+
+Voici quelques phrases que vous pouvez taper dans le mode 3 du Weeabot pour tester :\\
+
+\begin{itemize}
+	\item \texttt{give me a drama manga}
+	\item \texttt{I like Naruto}
+	\item \texttt{which manga is the best ?}
+	\item \texttt{who is the author ?}
+	\item \texttt{can you talk about Berserk ?}
+	\item \texttt{give me a drama and police manga}
+	\item \texttt{which manga is the best ?}
+
+\end{itemize}
+
+
 \subsection{Structure du Weeabot}
 
 Afin d'avoir une base de données de mangas sur laquelle travailler pour le mode 3, nous avons tout d'abord voulu nous pencher sur le module \texttt{BeautifulSoup}, mais après quelques recherches nous nous sommes rendus compte qu'il existait un module nommé \texttt{myanimelist} qui s'occupait d'extraire les informations de \texttt{myanimelist.net} pour nous, il nous a donc suffit de nous documenter sur ce module et d'enregistrer les données localement à l'aide de \texttt{pickle} afin de ne pas avoir à les retélécharger. \\
@@ -156,26 +188,9 @@ La justification du Weeabot quant à la qualité d’un manga se fait en partie 
 Il y a également un facteur aléatoire qui fait que le bot peut se justifier par des critères différents, par exemple qu’il aime l’auteur, ou le titre du manga, etc.
 Ce facteur aléatoire a été incorporé à plusieurs endroits pour diversifier la conversation, par exemple pour éviter que le bot ne répète constamment la même information quand l’utilisateur ne montre pas de volonté précise d’informations dans une phrase, et cela en appliquant au hasard des thèmes de discussion, ou même en appelant le système de réponse du mode 2. \\
 
-
-\subsection{Capacités du Weeabot}
-Le Weeabot possède 3 modes, le mode 1 étant le plus simple et le 3 le plus avancé. Nous avons aussi simulé le fait qu'une personne réelle soit en train de nous répondre en tapant sur son clavier à l'aide d'intervalles aléatoires.\\
-
-\begin{itemize}
-\item[$\bullet$] \textbf{Mode 1 :} Ce mode correspond à celui décrit dans l'énoncé, il répond seulement des onomatopées ou acquiesce à ce que l'utilisateur dit, sans y prêter attention.\\ Il fait cependant attention à ne pas utiliser la même onomatopée ou le même mot à la suite.\\
-\item[$\bullet$] \textbf{Mode 2 :} Dans ce mode il existe une meilleure interaction entre l'utilisateur et le Weeabot, celui ci possède un panel de phrases prédéfinies correspondant à plusieurs thèmes. Il va piocher aléatoirement dans ses réponses possibles en prenant garde à ne pas choisir la même phrase deux fois de suite pour le même thème. \\
-Nous avons essayé de faire en sorte qu'il ait certaines réactions en fonction du comportement de l'utilisateur, par exemple si l'utilisateur répète plusieurs fois de suite la même phrase, il lui fera remarquer.\\
-\item[$\bullet$] \textbf{Mode 3 :} C'est dans ce mode que le Weeabot révèle son côté Weeaboo en parlant essentiellement de mangas. À l'aide de sa base de données qui contient plusieurs centaines de mangas et leurs informations provenant de \url{https://myanimelist.net/}, il peut nous renseigner sur le classement du manga sur ce site, son genre, le nombre de personnes l'ayant en favori, la note que lui ont mis les utilisateurs du site, son nombre de chapitres, sa date de publication, son ou ses auteurs et enfin ses personnages. \\
-Nous pouvons demander plusieurs informations à la suite sur le même manga grâce au fait qu'il garde toujours le dernier manga en mémoire. Ainsi nous avons la possibilité de comparer des mangas de demander le rang de l'un et de dire \texttt{what about [other manga title]?} afin que l'on nous donne l'information pour l'autre manga. \\
-Il est aussi possible de donner son avis sur un manga en disant si on l'aime ou non, et le Weeabot nous donnera son avis sur ce manga en fonction de critères se basant sur la popularité et la moyenne des mangas de sa base de données. \\
-Par exemple si nous lui disons \texttt{I like Naruto}, il nous répondra qu'il est d'accord avec nous en nous donnant un critère aléatoire qu'il aime bien (\textit{sa longueur, son rang, sa popularité...}).\\
-Si nous voulons lire un type de manga en particulier nous pouvons demander conseil au Weeabot et il choisira le manga le mieux classé correspondant au genre que nous lui avons demandé. \\
-Bien sûr nous pouvons demander un manga correspondant à plusieurs genres et s'il n'en trouve aucun dans sa liste, il nous le fera savoir. Par exemple nous pouvons lui dire \texttt{give me a manga with adventure genre} et il nous donnera le titre d'un manga par contre, si nous lui disons \texttt{give me a manga with adventure and action genre} il nous donnera le titre d'un autre manga.\\
-Bien sûr s'il ne trouve aucune réponse possible il essaye de répondre en utilisant le mode 2 et si il ne trouve rien à dire il utilise une réponse du mode 1.\\
-\end{itemize}
-
 \subsection{Limites du Weeabot}
 Malheureusement, le Weeabot n'est pas parfait...
-Le vocabulaire utilisé pour détecter le souhait de l’utilisateur n’est peut-être pas assez développé dans le mode 2 et il y a probablement des risques de collisions de vocabulaire de déclenchement pour ces modes. De plus il arrive que la réponse à la question soit \texttt{None}, ce qui provient de cas (rares) de non information concernant un sujet précis sur un certain manga, et qui n’ont pas été traité lors de la rédaction des phrases réponses.\\
+Le vocabulaire utilisé pour détecter le souhait de l’utilisateur n’est peut-être pas assez développé dans le mode 2 et il y a probablement des risques de collisions de vocabulaire de déclenchement pour ces modes. De plus il arrive que la réponse à la question soit \texttt{None}, ce qui provient de cas (rares) de non information concernant un sujet précis sur un certain manga, et qui n’ont pas été traités lors de la rédaction des phrases réponses.\\
 Par exemple on ne connait pas le nombre de chapitres d'un manga qui n'est pas fini, par conséquent quand on demandera son nombre de chapitres, le Weeabot nous répondra \texttt{None}, et même en essayant d'y remédier nous n'y sommes pas encore parvenu. \\
 
 Il subsiste malheureusement quelques bugs qui concerneraient la liaison entre les différents modes qui peut ne pas fonctionner dans certains cas. Il se trouve que notre manière de détecter le vocabulaire dans le mode 3 n'est pas forcément la meilleure et on a donc du quelque fois du mal à obtenir la réponse à la question que l'on a posé si celle ci est mal formulée.\\ 
@@ -202,9 +217,13 @@ La première amélioration à apporter serait évidemment plus de stabilité ain
 Ainsi, on aurait accès au nombre de chapitres d'un manga en cours de parution.
 Concernant le bot, il faudrait lui donner un peu plus de vie, en lui permettant d'avoir plus de phrases de réponses, qu'il pourrait construire lui-même, dans le but d'avoir une interaction qui nous semble plus réelle.\\
 Il serait aussi original que le bot utilise certaines mimiques et expressions propres aux weeaboos, qui adore inclure des mots japonais dans leur phrase, cela lui donnerait une certaine personnalité et renforcerait son identité de Weeabot.\\
+Enfin, il serait judicieux d'inclure du machine learning à notre programme afin d'apprendre à la machine à construire des phrases, ou même à mieux analyser celles de l'utilisateur.\\
 
 \subsection{Conclusion}
 
+Nous avons trouver ce projet très intéressant et enrichissant, en effet, il n'était pas orienté seulement sur le code, il y avait une partie linguistique qui était très importante.\\
+Même si nous avons eu quelques difficultés et échecs dans la réalisation de ce projet, nous pensons l'avoir mené à bien et avoir beaucoup appris. \\
+Ainsi, si nous devions le recommencer, nous aurions une meilleure idée de comment le réaliser, où commencer mais aussi, comment le structurer.\\
 
 
 
