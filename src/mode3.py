@@ -7,11 +7,62 @@ import random
 
 sorted_manga = []
 list_genre = []
-list_manga_matched = []
+
+proposed_mangas = [] # list of mangas proposed by the weeabot
+proposed_mangas = [] # list of mangas proposed by the weeabot
+
+def in_manga_list(m, arr, g):
+	#print(str(arr))
+	for a in arr:
+		try:
+			#print(a[0].lower())
+			if a[0].lower()==g.lower():
+				for i in a[1]:
+					if m.lower()==i.lower():
+						return True
+		except:
+			1
+	return False
+
+def new_proposition(m, g):
+	global proposed_mangas
+	for prop in proposed_mangas:
+		try:
+			if prop[0].lower()==g.lower():
+				prop[1].append(m.title)
+				break
+		except:
+			1
+
+def new_propositions(m, cr):
+	global proposed_mangas
+	for g in cr:
+		for prop in proposed_mangas:
+			try:
+				if prop[0].lower()==g.lower():
+					prop[1].append(m.title)
+					break
+			except:
+				1
 
 curr1 = None
 curr2 = None
 last_theme=9
+
+# Data related to the database
+avg_mark = 0
+
+def calc_avg_mark():
+	global avg_mark
+	mark = 0
+	nb = 0
+	for m in sorted_manga:
+		try:
+			mark+=m.score
+			nb+=1
+		except:
+			1
+	avg_mark = mark/nb
 
 def new_current(m):
 		global curr1
@@ -50,18 +101,36 @@ actionToDo = [
         ['both', 'compare', 'between', 'and', 'two'], # compare curr1 and curr2 on a criteria
         ['the', 'best', 'highest', 'biggest', 'all', 'first'], # give the best on one criteria
         ['the', 'worst', 'all', 'last'], # and the worst
-        ['give', 'which', 'manga', 'can', 'suggest', 'and'] # find a manga with a particularity
+        ['give', 'which', 'manga', 'can', 'suggest', 'and'], # find a manga with a particularity
+        ['like', 'love'],
+		['not', 'like', 'dislike', 'hate']
         ]
 
+def like_manga():
+	return "I like "+curr1.title
+
+def dislike_manga():
+	return "I hate "+curr1.title
+
 def act(nb, ac, crit=None, second=0):
-        if ac==0:
-                return give_info(nb)
-        elif ac==1:
-                return compare(nb)
-        elif ac==2:
-                return highest(nb, sorted_manga)
-        elif ac==4:
-        	return find_manga(crit, sorted_manga, second)
+	if ac==0:
+		return give_info(nb)
+	elif ac==1:
+		return compare(nb)
+	elif ac==2:
+		return highest(nb, sorted_manga)
+	elif ac==4:
+		return find_manga(crit, sorted_manga)
+	elif ac==5:
+		if curr1.score >= avg_mark:
+			return "I agree with you, "+like_manga()
+		else:
+			return "I disagree, "+dislike_manga()
+	elif ac==6:
+		if curr1.score >= avg_mark:
+			return "I disagree with you, "+like_manga()
+		else:
+			return "I agree, "+dislike_manga()
   
 
 class Manga(dict):
@@ -237,23 +306,31 @@ def determine_genre(sent):
 				genres.append(genre)
 	return genres
 
-def find_manga(crit, sorted_manga, second):
-	global list_manga_matched
+def find_manga(crit, sorted_manga):
+	global proposed_mangas
 	if crit is not None:
 		nb_crit = len(crit)
 		if nb_crit==0:
 			return "There is no manga with this genres"
 		for manga in sorted_manga:
 			#print("here")
-			if set(crit).issubset(manga.genres):
-				if second==0:
-					new_current(manga)
-					return "It's a perfect match with " + manga.title
-				if second==1:
-					second -= 1
-					continue	
+			flag=True
+			for c in crit:
+				if in_manga_list(manga.title,proposed_mangas,c):
+					flag=False
+					break
+			if set(crit).issubset(manga.genres) and flag:
+				#if second==0:
+				new_propositions(manga, crit)
+				new_current(manga)
+				return "It's a perfect match with " + manga.title
+				#if second==1:
+				#	second -= 1
+				#	continue
+		for manga in sorted_manga:	
 			for genre in manga.genres:
-				if genre in crit:
+				if genre in crit and in_manga_list(manga.title,proposed_mangas, genre)==False:
+					new_proposition(manga, genre)
 					new_current(manga)
 					return "It's match partly with " + manga.title
 	return "no match"
@@ -287,6 +364,7 @@ def run():
 	print("ajout manga---")'''
 	global sorted_manga
 	global list_genre
+	global proposed_mangas
 	listemangafini = []
 	listemangafini = pickle.load(file)
 	sorted_manga = order_by_rank(listemangafini)
@@ -295,7 +373,11 @@ def run():
 		for genres in manga.genres:
 			if genres not in list_genre:
 				list_genre.append(genres)
-	print(list_genre)
+				newGenre = []
+				newGenre.append(genres)
+				newGenre.append([])
+				proposed_mangas.append(newGenre)
+	#print(list_genre)
 	#for manga in sorted_manga:
 		#nbmanga = nbmanga + 1
 		#manga.informations()
@@ -306,6 +388,7 @@ def run():
 	#for i in range (0, 100):
 		#print(sorted_manga[i].title, sorted_manga[i].rank)
 	new = 0
+	calc_avg_mark()
 	while(True):
 		sent = f.tokenise_en(input("You: "))
 		th = determine_most(sent, vocabSubject)
@@ -315,13 +398,7 @@ def run():
 		if action==4:
 			g = []
 			g = determine_genre(sent)
-			second = 0
-			for w in sent:
-				if "another"==w:
-					second += 1
-				else:
-					second += 0
-			f.type(str(act(th, action, g, second)))
+			f.type(str(act(th, action, g)))
 		else:
         #f.type(str(get_subject(th, curr1)))
 			f.type(str(act(th, action)))

@@ -35,7 +35,7 @@ def type(stri):
     time.sleep(0.7)
     for v in stri:
         if v == " ":
-            time.sleep(random.randint(100,300)/1000)
+            time.sleep(random.randint(50,150)/1000)
         print(v, end='')        
         sys.stdout.flush()
         time.sleep(random.randint(10,50)/1000)
